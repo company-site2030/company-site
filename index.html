@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,64 +7,68 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- رأس الموقع -->
+  <!-- الشريط العلوي -->
   <header>
     <div class="logo">شركة الإعلانات</div>
-    <div class="menu-toggle">☰</div>
-    <nav class="nav-links">
-      <a href="index.html">الرئيسية</a>
-      <a href="register.html">تسجيل</a>
-      <a href="login.html">دخول</a>
-      <a href="#services">الخدمات</a>
-      <a href="#about">عن الشركة</a>
-      <a href="#works">أعمالنا</a>
-      <a href="#contact">اتصل بنا</a>
-      <a href="#reviews">آراء العملاء</a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">الرئيسية</a></li>
+        <li><a href="#about">عن الشركة</a></li>
+        <li><a href="#success">نجاحاتنا</a></li>
+        <li><a href="#works">أعمالنا</a></li>
+        <li><a href="#clients">آراء العملاء</a></li>
+        <li><a href="#contact">تواصل معنا</a></li>
+        <li><a href="login.html">تسجيل الدخول</a></li>
+        <li><a href="register.html">تسجيل</a></li>
+      </ul>
+      <div class="menu-toggle" id="menu-toggle">☰</div>
     </nav>
   </header>
 
-  <!-- الصفحة الرئيسية -->
-  <main class="main-content">
-    <section class="glass-section">
-      <h1>مرحباً بكم في شركة الإعلانات</h1>
-      <p>نحن شركة متخصصة في التسويق والإعلانات الرقمية، نساعدك في الوصول إلى عملائك وزيادة مبيعاتك بخطوات مدروسة.</p>
-      <button onclick="window.location.href='register.html'">ابدأ الآن</button>
-    </section>
-  </main>
-
-  <!-- الخدمات -->
-  <section id="services" class="glass-section">
-    <h2>الخدمات</h2>
-    <p>نوفر حلول إعلانية مبتكرة تشمل التسويق عبر السوشيال ميديا، تصميم المواقع، إدارة الحملات، وتحليل البيانات.</p>
+  <!-- الرئيسية -->
+  <section class="hero">
+    <h1>مرحبا بكم في شركة الإعلانات</h1>
+    <p>نحن نصنع نجاحك ونروي قصتك من خلال حملات إعلانية إبداعية.</p>
+    <img src="https://source.unsplash.com/800x400/?business,success" alt="شركة إعلانات">
   </section>
 
   <!-- عن الشركة -->
-  <section id="about" class="glass-section">
+  <section id="about" class="section">
     <h2>عن الشركة</h2>
-    <p>تأسست شركتنا عام 2020 وساعدنا أكثر من 500 عميل حول العالم في تطوير حضورهم الرقمي وتحقيق أهدافهم التجارية.</p>
+    <p>تأسست شركتنا عام 2010، ومنذ ذلك الحين عملنا على تطوير استراتيجيات تسويقية مبتكرة تخدم عملاءنا محلياً وعالمياً.</p>
+    <img src="https://source.unsplash.com/600x300/?office,team" alt="عن الشركة">
   </section>
 
-  <!-- أعمالنا -->
-  <section id="works" class="glass-section">
+  <!-- النجاحات -->
+  <section id="success" class="section">
+    <h2>نجاحاتنا</h2>
+    <p>أطلقنا أكثر من 500 حملة ناجحة مع عملاء من مختلف القطاعات.</p>
+    <img src="https://source.unsplash.com/600x300/?success,growth" alt="نجاحاتنا">
+  </section>
+
+  <!-- الأعمال -->
+  <section id="works" class="section">
     <h2>أعمالنا</h2>
-    <p>تشمل أعمالنا حملات ناجحة لعلامات تجارية كبيرة وصغيرة، نتميز بالشفافية والنتائج المضمونة.</p>
+    <p>من الحملات الرقمية إلى الإعلانات التلفزيونية، نصمم أعمالاً تبقى في الذاكرة.</p>
+    <img src="https://source.unsplash.com/600x300/?advertising,creative" alt="أعمالنا">
   </section>
 
   <!-- آراء العملاء -->
-  <section id="reviews" class="glass-section">
+  <section id="clients" class="section">
     <h2>آراء العملاء</h2>
-    <p>"شركة رائعة ساعدتنا في الوصول إلى عملاء جدد وزيادة المبيعات" – عميل سعيد</p>
-    <p>"أفضل فريق تسويق عملت معهم" – عميل آخر</p>
+    <blockquote>"شركة الإعلانات ساعدتنا في الوصول إلى جمهورنا المستهدف بطريقة مذهلة!"</blockquote>
+    <blockquote>"أفضل تجربة إعلانية عشناها مع فريقهم المبدع."</blockquote>
   </section>
 
-  <!-- اتصل بنا -->
-  <section id="contact" class="glass-section">
-    <h2>اتصل بنا</h2>
-    <p>للاستفسارات يمكنك مراسلتنا عبر البريد الإلكتروني: <strong>info@ads-company.com</strong></p>
+  <!-- تواصل معنا -->
+  <section id="contact" class="section">
+    <h2>تواصل معنا</h2>
+    <p>بريد إلكتروني: info@adscompany.com</p>
+    <p>هاتف: 123456789</p>
   </section>
 
   <footer>
-    <p>© 2025 جميع الحقوق محفوظة - شركة الإعلانات</p>
+    <p>© 2025 شركة الإعلانات. جميع الحقوق محفوظة.</p>
   </footer>
 
   <script src="script.js"></script>
