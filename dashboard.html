@@ -3,198 +3,202 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>لوحة العميل - شركة الإعلانات</title>
+  <title>حساب العميل</title>
   <style>
     body {
       margin: 0;
       font-family: 'Tahoma', sans-serif;
-      background: linear-gradient(135deg, rgba(0,0,0,0.85), rgba(50,50,50,0.85)),
-                  url('https://source.unsplash.com/1600x900/?business,office');
+      background: linear-gradient(135deg, rgba(0,0,0,0.85), rgba(0,60,120,0.9)),
+                  url('https://source.unsplash.com/1600x900/?business,finance');
       background-size: cover;
       background-attachment: fixed;
       color: #fff;
     }
 
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      background: rgba(0,0,0,0.7);
       padding: 15px 30px;
-      background: rgba(0,0,0,0.6);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 20px;
+      text-align: center;
+      font-size: 22px;
       font-weight: bold;
-      white-space: nowrap;
-    }
-
-    nav {
-      display: flex;
-      align-items: center;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 20px;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    .nav-links a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    .menu-toggle {
-      display: none;
-      font-size: 26px;
-      cursor: pointer;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.6);
     }
 
     main {
-      max-width: 500px;
-      margin: 50px auto;
-      padding: 30px;
-      border-radius: 20px;
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
-      text-align: center;
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 20px;
+      border-radius: 15px;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 25px rgba(0,0,0,0.6);
     }
 
-    h2 {
-      margin-bottom: 20px;
+    .info-box {
+      background: rgba(255,255,255,0.1);
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 15px;
     }
+
+    .info-box h3 { margin: 0 0 10px; }
 
     .balance {
-      font-size: 22px;
+      font-size: 24px;
       font-weight: bold;
-      margin-bottom: 30px;
+      color: #00ffcc;
     }
 
     button {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
+      margin: 8px 5px;
+      padding: 12px 20px;
       border: none;
       border-radius: 10px;
       background: #00c3ff;
       color: #fff;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: bold;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: 0.3s;
+    }
+    button:hover { background: #008bbf; }
+
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+      border-radius: 10px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.1);
     }
 
-    button:hover {
-      background: #008bbf;
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
     }
 
-    @media (max-width: 768px) {
-      .nav-links {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        flex-direction: column;
-        background: rgba(0,0,0,0.9);
-        height: 100%;
-        width: 250px;
-        padding-top: 60px;
-        transition: right 0.3s ease;
-      }
-      .nav-links.active {
-        right: 0;
-      }
-      .menu-toggle {
-        display: block;
-      }
+    th {
+      background: rgba(0,0,0,0.6);
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>شركة الإعلانات</h1>
-    <nav>
-      <span class="menu-toggle">☰</span>
-      <ul class="nav-links">
-        <li><a href="index.html">الرئيسية</a></li>
-        <li><a href="#" onclick="logout()">تسجيل الخروج</a></li>
-      </ul>
-    </nav>
-  </header>
-
+  <header>لوحة تحكم العميل</header>
   <main>
-    <h2 id="welcome">مرحبا بك 👋</h2>
-    <p class="balance">الرصيد الحالي: <span id="balance">0</span> $</p>
-    <button onclick="deposit()">إيداع</button>
-    <button onclick="withdraw()">سحب</button>
+    <div class="info-box">
+      <h3>👤 الاسم:</h3>
+      <p id="clientName">--</p>
+    </div>
+
+    <div class="info-box">
+      <h3>📧 البريد الإلكتروني:</h3>
+      <p id="clientEmail">--</p>
+    </div>
+
+    <div class="info-box">
+      <h3>📱 رقم الهاتف:</h3>
+      <p id="clientPhone">--</p>
+    </div>
+
+    <div class="info-box">
+      <h3>💰 الرصيد الحالي:</h3>
+      <p class="balance" id="clientBalance">0 $</p>
+    </div>
+
+    <button onclick="deposit()">💳 إيداع</button>
+    <button onclick="withdraw()">💵 سحب</button>
+
+    <h3 style="margin-top:30px;">📜 العمليات</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>النوع</th>
+          <th>المبلغ</th>
+          <th>التاريخ</th>
+        </tr>
+      </thead>
+      <tbody id="transactions">
+        <tr><td colspan="3">لا يوجد عمليات بعد</td></tr>
+      </tbody>
+    </table>
   </main>
 
   <script type="module">
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getAuth, onAuthStateChanged, signOut }
+      from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, updateDoc, arrayUnion }
+      from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { app } from "./firebase.js";
 
-    const auth = getAuth();
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-    // تحقق من المستخدم الحالي
-    onAuthStateChanged(auth, (user) => {
+    const nameEl = document.getElementById("clientName");
+    const emailEl = document.getElementById("clientEmail");
+    const phoneEl = document.getElementById("clientPhone");
+    const balanceEl = document.getElementById("clientBalance");
+    const txEl = document.getElementById("transactions");
+
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const name = user.displayName || user.email || "العميل";
-        document.getElementById("welcome").textContent = "مرحبا، " + name;
-        document.getElementById("balance").textContent = "0"; // يبدأ الرصيد صفر
+        const ref = doc(db, "users", user.uid);
+        const snap = await getDoc(ref);
+        if (snap.exists()) {
+          const data = snap.data();
+          nameEl.textContent = data.name;
+          emailEl.textContent = data.email;
+          phoneEl.textContent = data.phone;
+          balanceEl.textContent = data.balance + " $";
+
+          if (data.transactions.length > 0) {
+            txEl.innerHTML = "";
+            data.transactions.forEach(tx => {
+              const row = document.createElement("tr");
+              row.innerHTML = `<td>${tx.type}</td><td>${tx.amount} $</td><td>${tx.date}</td>`;
+              txEl.appendChild(row);
+            });
+          }
+        }
       } else {
         window.location.href = "login.html";
       }
     });
 
-    // تسجيل الخروج
-    window.logout = () => {
-      signOut(auth).then(() => {
-        window.location.href = "login.html";
-      });
-    };
-
-    // إيداع
     window.deposit = () => {
-      const addr = "0x7F8125C197B845E1F0682A9846B94A11cA9d9743";
-      const ok = confirm("لإيداع USDT (ERC20) الرجاء تحويل المبلغ إلى:\n\n" + addr + "\n\nهل تريد نسخ العنوان الآن إلى الحافظة؟");
-      if (ok && navigator.clipboard) {
-        navigator.clipboard.writeText(addr).then(() => {
-          alert("تم نسخ عنوان المحفظة ✅");
-        }).catch(() => {
-          alert("فشل النسخ، انسخ العنوان يدويًا:\n" + addr);
-        });
-      }
+      alert("💳 يرجى تحويل الأموال إلى محفظة USDT:\n0x7F8125C197B845E1F0682A9846B94A11cA9d9743");
     };
 
-    // سحب
-    window.withdraw = () => {
-      const address = prompt("أدخل عنوان محفظتك (USDT ERC20):");
-      if (!address) return;
+    window.withdraw = async () => {
+      const addr = prompt("أدخل عنوان محفظة USDT لسحب الأموال:");
+      if (!addr) return;
 
-      const amountStr = prompt("أدخل المبلغ المطلوب سحبه (USDT):");
-      const amount = parseFloat(amountStr);
+      const amount = prompt("أدخل المبلغ المطلوب سحبه:");
+      if (!amount || isNaN(amount)) return alert("❌ المبلغ غير صالح");
 
-      if (!amountStr || isNaN(amount) || amount <= 0) {
-        alert("المبلغ غير صالح ❌");
-        return;
+      const user = auth.currentUser;
+      const ref = doc(db, "users", user.uid);
+      const snap = await getDoc(ref);
+      const data = snap.data();
+
+      if (parseFloat(amount) > data.balance) {
+        return alert("❌ الرصيد غير كافي");
       }
 
-      alert("✅ تم إرسال طلب السحب:\nالعنوان: " + address + "\nالمبلغ: " + amount + " USDT\nسيتم المعالجة قريبًا.");
-    };
+      await updateDoc(ref, {
+        balance: data.balance - parseFloat(amount),
+        transactions: arrayUnion({
+          type: "سحب",
+          amount,
+          date: new Date().toLocaleString()
+        })
+      });
 
-    // القائمة للجوال
-    const toggle = document.querySelector(".menu-toggle");
-    const navLinks = document.querySelector(".nav-links");
-    toggle.addEventListener("click", () => {
-      navLinks.classList.toggle("active");
-    });
+      alert("✅ تم تسجيل طلب السحب، سيتم تحويل الأموال قريباً");
+      location.reload();
+    };
   </script>
 </body>
 </html>
