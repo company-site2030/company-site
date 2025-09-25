@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,47 +13,49 @@
       color: white;
       line-height: 1.6;
     }
-    /* Navbar */
+    /* ====== Navbar ====== */
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 15px 30px;
-      background: rgba(0,0,0,0.6);
+      padding: 15px 20px;
+      background: rgba(0,0,0,0.5);
       position: sticky;
       top: 0;
       z-index: 1000;
     }
-    header h1 { margin: 0; font-size: 22px; }
+    header h1 {
+      margin: 0;
+      font-size: 20px;
+    }
     nav {
       display: flex;
       gap: 15px;
     }
-    nav a, nav button {
-      background: none;
-      border: none;
+    nav a {
+      text-decoration: none;
       color: white;
       font-weight: bold;
-      cursor: pointer;
-      font-size: 16px;
+      transition: 0.3s;
     }
-    nav a:hover, nav button:hover { color: #00f5d4; }
-    /* Hamburger */
-    .hamburger {
+    nav a:hover {
+      color: #00f5d4;
+    }
+    /* زر 3 خطوط */
+    .menu-toggle {
       display: none;
       flex-direction: column;
       cursor: pointer;
     }
-    .hamburger span {
-      width: 25px;
+    .menu-toggle span {
       height: 3px;
+      width: 25px;
       background: white;
       margin: 4px 0;
+      border-radius: 2px;
     }
-    .nav-links {
-      display: flex;
-    }
-    .nav-links.mobile {
+    /* منيو الجوال */
+    .mobile-menu {
       display: none;
       flex-direction: column;
       background: rgba(0,0,0,0.9);
@@ -61,77 +63,37 @@
       top: 60px;
       right: 0;
       width: 200px;
-      padding: 15px;
+      border-radius: 0 0 10px 10px;
     }
-    .nav-links.mobile a, .nav-links.mobile button {
-      padding: 10px 0;
-      text-align: right;
+    .mobile-menu a {
+      padding: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
-    /* Hero */
-    .hero {
-      text-align: center;
-      padding: 70px 20px;
+    .mobile-menu a:last-child {
+      border-bottom: none;
     }
-    .hero h2 { font-size: 36px; margin-bottom: 20px; }
+    .mobile-menu.show {
+      display: flex;
+    }
+    /* للشاشات الصغيرة */
+    @media(max-width: 768px) {
+      nav { display: none; }
+      .menu-toggle { display: flex; }
+    }
+
+    /* ====== باقي التنسيقات ====== */
+    .hero { text-align: center; padding: 50px 20px; }
+    .hero h2 { font-size: 28px; margin-bottom: 15px; }
     .section {
-      padding: 50px 20px;
+      padding: 40px 20px;
       text-align: center;
       background: rgba(255,255,255,0.05);
       margin: 20px auto;
       border-radius: 12px;
-      max-width: 1000px;
+      max-width: 900px;
     }
-    .section h3 { font-size: 26px; margin-bottom: 15px; }
-    /* Services grid */
-    .services {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-    }
-    .service-card {
-      background: rgba(255,255,255,0.1);
-      padding: 20px;
-      border-radius: 12px;
-    }
-    /* Works */
-    .works {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 15px;
-    }
-    .works img {
-      width: 100%;
-      border-radius: 10px;
-    }
-    /* Testimonials */
-    .testimonials {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 15px;
-    }
-    .testimonial {
-      background: rgba(255,255,255,0.1);
-      padding: 15px;
-      border-radius: 10px;
-    }
-    /* Contact form */
-    form input, form textarea, form button {
-      display: block;
-      width: 90%;
-      margin: 10px auto;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-    }
-    form button {
-      background: linear-gradient(45deg, #00f5d4, #00bbf9);
-      color: black;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    /* Container (Register/Login/Dashboard) */
     .container {
-      max-width: 500px;
+      max-width: 400px;
       margin: 30px auto;
       padding: 25px;
       background: rgba(255,255,255,0.1);
@@ -140,15 +102,23 @@
       text-align: center;
     }
     input, button {
+      display: block;
+      width: 90%;
       margin: 10px auto;
       padding: 12px;
-      border-radius: 10px;
       border: none;
+      border-radius: 10px;
+    }
+    button {
+      background: linear-gradient(45deg, #00f5d4, #00bbf9);
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
     }
     button:hover { transform: scale(1.05); }
     .hidden { display: none; }
     .balance {
-      font-size: 28px;
+      font-size: 24px;
       font-weight: bold;
       color: #00f5d4;
       margin: 15px 0;
@@ -158,114 +128,51 @@
       display: inline-block;
       margin: 10px;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-    table, th, td {
-      border: 1px solid rgba(255,255,255,0.3);
-    }
-    th, td {
-      padding: 10px;
-      text-align: center;
-    }
-    th {
-      background: rgba(255,255,255,0.2);
-    }
-    /* Responsive */
-    @media (max-width: 768px) {
-      nav { display: none; }
-      .hamburger { display: flex; }
-    }
   </style>
 </head>
 <body>
-  <!-- Header -->
+  <!-- Navbar -->
   <header>
-    <h1>🌐 شركتنا</h1>
-    <nav class="nav-links">
-      <a href="#home">الرئيسية</a>
-      <a href="#services">الخدمات</a>
-      <a href="#about">عن الشركة</a>
-      <a href="#works">أعمالنا</a>
-      <a href="#testimonials">آراء العملاء</a>
-      <a href="#contact">اتصل بنا</a>
-      <button onclick="showSection('register')">تسجيل</button>
-      <button onclick="showSection('login')">دخول</button>
+    <h1>🌐 شركة الإعلانات</h1>
+    <nav>
+      <a href="#" onclick="showSection('home')">الرئيسية</a>
+      <a href="#" onclick="showSection('services')">الخدمات</a>
+      <a href="#" onclick="showSection('about')">عن الشركة</a>
+      <a href="#" onclick="showSection('works')">أعمالنا</a>
+      <a href="#" onclick="showSection('clients')">آراء العملاء</a>
+      <a href="#" onclick="showSection('contact')">اتصل بنا</a>
+      <a href="#" onclick="showSection('register')">تسجيل</a>
+      <a href="#" onclick="showSection('login')">دخول</a>
     </nav>
-    <div class="hamburger" onclick="toggleMenu()">
+    <div class="menu-toggle" onclick="toggleMenu()">
       <span></span><span></span><span></span>
     </div>
-    <nav class="nav-links mobile" id="mobileMenu">
-      <a href="#home" onclick="toggleMenu()">الرئيسية</a>
-      <a href="#services" onclick="toggleMenu()">الخدمات</a>
-      <a href="#about" onclick="toggleMenu()">عن الشركة</a>
-      <a href="#works" onclick="toggleMenu()">أعمالنا</a>
-      <a href="#testimonials" onclick="toggleMenu()">آراء العملاء</a>
-      <a href="#contact" onclick="toggleMenu()">اتصل بنا</a>
-      <button onclick="showSection('register');toggleMenu()">تسجيل</button>
-      <button onclick="showSection('login');toggleMenu()">دخول</button>
-    </nav>
   </header>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#" onclick="showSection('home');toggleMenu()">الرئيسية</a>
+    <a href="#" onclick="showSection('services');toggleMenu()">الخدمات</a>
+    <a href="#" onclick="showSection('about');toggleMenu()">عن الشركة</a>
+    <a href="#" onclick="showSection('works');toggleMenu()">أعمالنا</a>
+    <a href="#" onclick="showSection('clients');toggleMenu()">آراء العملاء</a>
+    <a href="#" onclick="showSection('contact');toggleMenu()">اتصل بنا</a>
+    <a href="#" onclick="showSection('register');toggleMenu()">تسجيل</a>
+    <a href="#" onclick="showSection('login');toggleMenu()">دخول</a>
+  </div>
 
-  <!-- Home -->
-  <section id="home" class="hero">
+  <!-- أقسام الموقع -->
+  <div id="home" class="hero">
     <h2>مرحباً بك في شركتنا</h2>
-    <p>نحن شركة رائدة في مجال الإعلانات الرقمية، نساعدك في الوصول إلى عملائك وزيادة مبيعاتك.</p>
-  </section>
+    <p>شركة الإعلانات الرائدة التي تساعدك على الوصول إلى جمهورك وتحقيق النجاح.</p>
+  </div>
+  <div id="services" class="section hidden"><h3>الخدمات</h3><p>نقدم خدمات تسويق رقمي، إدارة الحملات، تصميم إعلانات...</p></div>
+  <div id="about" class="section hidden"><h3>عن الشركة</h3><p>تأسست عام 2015 ونجحنا في خدمة أكثر من 500 عميل.</p></div>
+  <div id="works" class="section hidden"><h3>أعمالنا</h3><p>أبرز مشاريعنا الإعلانية الناجحة.</p></div>
+  <div id="clients" class="section hidden"><h3>آراء العملاء</h3><p>قالوا عنا: الأفضل في السوق!</p></div>
+  <div id="contact" class="section hidden"><h3>اتصل بنا</h3><p>راسلنا عبر البريد أو الهاتف.</p></div>
 
-  <!-- Services -->
-  <section id="services" class="section">
-    <h3>الخدمات</h3>
-    <div class="services">
-      <div class="service-card">📱 تسويق عبر وسائل التواصل</div>
-      <div class="service-card">🔍 إعلانات Google</div>
-      <div class="service-card">🎨 تصميم هوية بصرية</div>
-      <div class="service-card">💡 استشارات تسويقية</div>
-    </div>
-  </section>
-
-  <!-- About -->
-  <section id="about" class="section">
-    <h3>عن الشركة</h3>
-    <p>تأسست شركتنا عام 2015 بهدف تقديم حلول إعلانية مبتكرة. رؤيتنا أن نكون الشركة الأولى في الشرق الأوسط في مجال التسويق الرقمي.</p>
-  </section>
-
-  <!-- Works -->
-  <section id="works" class="section">
-    <h3>أعمالنا</h3>
-    <div class="works">
-      <img src="https://via.placeholder.com/300x200" alt="عمل 1">
-      <img src="https://via.placeholder.com/300x200" alt="عمل 2">
-      <img src="https://via.placeholder.com/300x200" alt="عمل 3">
-    </div>
-  </section>
-
-  <!-- Testimonials -->
-  <section id="testimonials" class="section">
-    <h3>آراء العملاء</h3>
-    <div class="testimonials">
-      <div class="testimonial">💬 "خدمة رائعة ونتائج مذهلة!"</div>
-      <div class="testimonial">💬 "أفضل شركة إعلانات عملت معها."</div>
-      <div class="testimonial">💬 "رفعوا مبيعاتنا بشكل كبير."</div>
-    </div>
-  </section>
-
-  <!-- Contact -->
-  <section id="contact" class="section">
-    <h3>اتصل بنا</h3>
-    <form>
-      <input type="text" placeholder="الاسم الكامل">
-      <input type="email" placeholder="البريد الإلكتروني">
-      <textarea rows="4" placeholder="رسالتك"></textarea>
-      <button type="submit">إرسال</button>
-    </form>
-  </section>
-
-  <!-- Register -->
+  <!-- تسجيل -->
   <div id="register" class="container hidden">
-    <h2>إنشاء حساب جديد</h2>
+    <h2>تسجيل حساب جديد</h2>
     <input type="text" id="regName" placeholder="الاسم الكامل">
     <input type="email" id="regEmail" placeholder="البريد الإلكتروني">
     <input type="text" id="regPhone" placeholder="رقم الهاتف">
@@ -273,7 +180,7 @@
     <button onclick="register()">تسجيل</button>
   </div>
 
-  <!-- Login -->
+  <!-- دخول -->
   <div id="login" class="container hidden">
     <h2>تسجيل الدخول</h2>
     <input type="email" id="loginEmail" placeholder="البريد الإلكتروني">
@@ -281,54 +188,35 @@
     <button onclick="login()">دخول</button>
   </div>
 
-  <!-- Dashboard -->
+  <!-- لوحة التحكم -->
   <div id="dashboard" class="container hidden">
     <h2>مرحبا <span id="userName"></span> 👋</h2>
     <p>📧 <span id="userEmail"></span></p>
     <h3>رصيدك الحالي</h3>
     <p class="balance"><span id="balance">0</span> USDT</p>
-
     <div class="action-btns">
       <button onclick="showDeposit()">💰 إيداع</button>
       <button onclick="showWithdraw()">🏧 سحب</button>
     </div>
-
     <div id="depositSection" class="hidden">
-      <h3>💰 تفاصيل الإيداع</h3>
-      <p>انسخ هذا العنوان وحول USDT (ERC20):</p>
-      <p style="word-break:break-all;">
-        <b>0x7F8125C197B845E1F0682A9846B94A11cA9d9743</b>
-      </p>
+      <h3>💰 الإيداع</h3>
+      <p>عنوان USDT ERC20:</p>
+      <p style="word-break:break-all;"><b>0x7F8125C197B845E1F0682A9846B94A11cA9d9743</b></p>
     </div>
-
     <div id="withdrawSection" class="hidden">
       <h3>🏧 طلب سحب</h3>
-      <input type="text" id="withdrawAddress" placeholder="أدخل عنوان USDT للسحب">
+      <input type="text" id="withdrawAddress" placeholder="عنوان USDT">
       <button onclick="requestWithdraw()">تأكيد السحب</button>
-      <h3 style="margin-top:20px;">📜 طلبات السحب السابقة</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>العنوان</th>
-            <th>التاريخ</th>
-          </tr>
-        </thead>
-        <tbody id="withdrawTable">
-          <tr><td colspan="3">لا توجد طلبات بعد</td></tr>
-        </tbody>
-      </table>
     </div>
-
     <button style="margin-top:30px; background:#ff4d6d;" onclick="logout()">تسجيل خروج</button>
   </div>
 
-  <!-- Firebase + JS -->
+  <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-
   <script>
+    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyCFYr3mTYs3BFvtnIcuFEjkSfJV3kPrzXk",
       authDomain: "ads-company-2e012.firebaseapp.com",
@@ -342,20 +230,21 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
 
+    // Toggle menu
     function toggleMenu() {
-      const menu = document.getElementById("mobileMenu");
-      menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+      document.getElementById("mobileMenu").classList.toggle("show");
     }
 
+    // Show sections
     function showSection(id) {
-      ["home","register","login","dashboard"].forEach(sec=>{
+      ["home","services","about","works","clients","contact","register","login","dashboard"].forEach(sec=>{
         const el = document.getElementById(sec);
-        if(el) el.classList.add("hidden");
+        if (el) el.classList.add("hidden");
       });
       document.getElementById(id).classList.remove("hidden");
-      window.scrollTo(0,0);
     }
 
+    // Register
     async function register() {
       const name = document.getElementById("regName").value;
       const email = document.getElementById("regEmail").value;
@@ -363,13 +252,12 @@
       const password = document.getElementById("regPassword").value;
       try {
         const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-        const user = userCredential.user;
-        await db.collection("users").doc(user.uid).set({ name, email, phone, balance: 0 });
-        alert("تم التسجيل بنجاح!");
-        loadDashboard(user);
+        await db.collection("users").doc(userCredential.user.uid).set({ name, email, phone, balance: 0 });
+        loadDashboard(userCredential.user);
       } catch (error) { alert(error.message); }
     }
 
+    // Login
     async function login() {
       const email = document.getElementById("loginEmail").value;
       const password = document.getElementById("loginPassword").value;
@@ -379,6 +267,7 @@
       } catch (error) { alert(error.message); }
     }
 
+    // Dashboard
     async function loadDashboard(user) {
       const doc = await db.collection("users").doc(user.uid).get();
       if (doc.exists) {
@@ -387,10 +276,8 @@
         document.getElementById("userEmail").innerText = data.email;
         document.getElementById("balance").innerText = data.balance;
         showSection("dashboard");
-        loadWithdrawHistory(user.uid);
       }
     }
-
     function showDeposit() {
       document.getElementById("depositSection").classList.remove("hidden");
       document.getElementById("withdrawSection").classList.add("hidden");
@@ -399,33 +286,18 @@
       document.getElementById("withdrawSection").classList.remove("hidden");
       document.getElementById("depositSection").classList.add("hidden");
     }
-
     async function requestWithdraw() {
       const address = document.getElementById("withdrawAddress").value;
-      const user = auth.currentUser;
-      if (!address) return alert("يرجى إدخال عنوان محفظة.");
-      await db.collection("withdrawRequests").add({ userId: user.uid, address, date: new Date() });
-      alert("تم إرسال طلب السحب بنجاح!");
-      document.getElementById("withdrawAddress").value = "";
-      loadWithdrawHistory(user.uid);
-    }
-
-    async function loadWithdrawHistory(userId) {
-      const tableBody = document.getElementById("withdrawTable");
-      tableBody.innerHTML = "";
-      const snapshot = await db.collection("withdrawRequests")
-        .where("userId","==",userId)
-        .orderBy("date","desc").get();
-      if (snapshot.empty) {
-        tableBody.innerHTML = "<tr><td colspan='3'>لا توجد طلبات بعد</td></tr>";
-        return;
-      }
-      let i = 1;
-      snapshot.forEach(doc=>{
-        const data = doc.data();
-        const date = data.date.toDate().toLocaleString("ar-EG");
-        tableBody.innerHTML += `<tr><td>${i++}</td><td>${data.address}</td><td>${date}</td></tr>`;
+      if (!address) return alert("أدخل عنوان المحفظة.");
+      await db.collection("withdrawRequests").add({
+        userId: auth.currentUser.uid,
+        address,
+        date: new Date()
       });
+      alert("تم إرسال الطلب!");
     }
-
-    function logout()
+    function logout() { auth.signOut(); showSection("home"); }
+    auth.onAuthStateChanged(user => { if (user) loadDashboard(user); });
+  </script>
+</body>
+</html>
