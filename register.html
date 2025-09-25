@@ -5,40 +5,73 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>تسجيل حساب جديد</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body { font-family: "Cairo", sans-serif; background: linear-gradient(135deg, #74ABE2, #5563DE); display:flex; align-items:center; justify-content:center; height:100vh; margin:0; }
+    .form-container { background:#fff; padding:30px; border-radius:15px; width:100%; max-width:400px; box-shadow:0 10px 25px rgba(0,0,0,0.15); }
+    h2 { text-align:center; margin-bottom:20px; }
+    label { display:block; margin:10px 0 5px; }
+    input { width:100%; padding:10px; border:1px solid #ccc; border-radius:8px; margin-bottom:15px; }
+    button { width:100%; padding:12px; border:none; border-radius:8px; background:#5563DE; color:#fff; font-size:16px; cursor:pointer; }
+    button:hover { background:#3d4db7; }
+    p { text-align:center; margin-top:15px; }
+    a { color:#5563DE; text-decoration:none; }
+  </style>
 </head>
 <body>
-  <!-- رأس الموقع -->
-  <header>
-    <div class="logo">شركة الإعلانات</div>
-    <div class="menu-toggle">☰</div>
-    <nav class="nav-links">
-      <a href="index.html">الرئيسية</a>
-      <a href="login.html">دخول</a>
-    </nav>
-  </header>
+  <div class="form-container">
+    <h2>تسجيل حساب جديد</h2>
+    <form id="registerForm">
+      <label>الاسم الكامل</label>
+      <input type="text" id="fullName" required>
+      
+      <label>البريد الإلكتروني</label>
+      <input type="email" id="email" required>
+      
+      <label>رقم الهاتف</label>
+      <input type="tel" id="phone" required>
+      
+      <label>كلمة المرور</label>
+      <input type="password" id="password" required>
+      
+      <button type="submit">تسجيل</button>
+    </form>
+    <p>لديك حساب؟ <a href="login.html">تسجيل الدخول</a></p>
+  </div>
 
-  <!-- نموذج التسجيل -->
-  <main class="main-content">
-    <section class="form-section glass-section">
-      <h2>تسجيل حساب جديد</h2>
-      <form id="register-form">
-        <input type="text" id="fullName" placeholder="الاسم الكامل" required>
-        <input type="email" id="email" placeholder="البريد الإلكتروني" required>
-        <input type="tel" id="phone" placeholder="رقم الهاتف" required>
-        <input type="password" id="password" placeholder="كلمة المرور" required>
-        <button type="submit">تسجيل</button>
-      </form>
-      <p>لديك حساب بالفعل؟ <a href="login.html">تسجيل الدخول</a></p>
-    </section>
-  </main>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-  <footer>
-    <p>© 2025 جميع الحقوق محفوظة - شركة الإعلانات</p>
-  </footer>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCFYr3mTYs3BFvtnIcuFEjkSfJV3kPrzXk",
+      authDomain: "ads-company-2e012.firebaseapp.com",
+      projectId: "ads-company-2e012",
+      storageBucket: "ads-company-2e012.appspot.com",
+      messagingSenderId: "706203585878",
+      appId: "1:706203585878:web:98c58764c1c7f95f1e5af7",
+      measurementId: "G-BKSKHM3Z2S"
+    };
 
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
-  <script src="script.js"></script>
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const form = document.getElementById("registerForm");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const fullName = document.getElementById("fullName").value;
+      const email = document.getElementById("email").value;
+      const phone = document.getElementById("phone").value;
+      const password = document.getElementById("password").value;
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        await updateProfile(userCredential.user, { displayName: fullName });
+        alert("تم التسجيل بنجاح ✅");
+        window.location.href = "dashboard.html";
+      } catch (error) {
+        alert("خطأ: " + error.message);
+      }
+    });
+  </script>
 </body>
 </html>
