@@ -23,7 +23,7 @@ const db = getFirestore(app);
 const menuToggle = document.getElementById("menu-toggle");
 const navLinks = document.getElementById("nav-links");
 
-if (menuToggle) {
+if (menuToggle && navLinks) {
   menuToggle.addEventListener("click", () => {
     navLinks.classList.toggle("active");
   });
@@ -43,7 +43,6 @@ if (registerForm) {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // حفظ بيانات إضافية في Firestore
       await setDoc(doc(db, "users", user.uid), {
         name,
         phone,
@@ -69,9 +68,7 @@ if (loginForm) {
 
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      window.location.href = "dashboard.html"; // بعد الدخول يروح للوحة التحكم
+      window.location.href = "dashboard.html";
     } catch (error) {
       alert("خطأ: " + error.message);
     }
@@ -103,7 +100,7 @@ if (logoutBtn) {
   });
 }
 
-// ✅ تشغيل لوحة التحكم بعد الدخول
+// ✅ تشغيل لوحة التحكم
 window.addEventListener("load", () => {
   if (window.location.pathname.includes("dashboard.html")) {
     loadDashboard();
