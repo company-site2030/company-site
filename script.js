@@ -1,4 +1,6 @@
+// ==========================
 // إعداد Firebase
+// ==========================
 const firebaseConfig = {
   apiKey: "AIzaSyCFYr3mTYs3BFvtnIcuFEjkSfJV3kPrzXk",
   authDomain: "ads-company-2e012.firebaseapp.com",
@@ -21,9 +23,9 @@ const registerForm = document.getElementById("register-form");
 if (registerForm) {
   registerForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const name = document.getElementById("name").value;
-    const phone = document.getElementById("phone").value;
-    const email = document.getElementById("email").value;
+    const name = document.getElementById("name").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
 
     try {
@@ -37,10 +39,10 @@ if (registerForm) {
         balance: 0
       });
 
-      alert("تم التسجيل بنجاح ✅");
+      alert("✅ تم التسجيل بنجاح");
       window.location.href = "login.html";
     } catch (error) {
-      alert("خطأ: " + error.message);
+      alert("❌ خطأ: " + error.message);
     }
   });
 }
@@ -52,14 +54,14 @@ const loginForm = document.getElementById("login-form");
 if (loginForm) {
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const email = document.getElementById("loginEmail").value;
+    const email = document.getElementById("loginEmail").value.trim();
     const password = document.getElementById("loginPassword").value;
 
     try {
       await auth.signInWithEmailAndPassword(email, password);
       window.location.href = "dashboard.html";
     } catch (error) {
-      alert("خطأ: " + error.message);
+      alert("❌ خطأ: " + error.message);
     }
   });
 }
@@ -96,12 +98,12 @@ if (logoutBtn) {
 }
 
 // ==========================
-// زر القائمة للجوال
+// القائمة (٣ شخطات للجوال)
 // ==========================
 const menuToggle = document.querySelector(".menu-toggle");
 const navLinks = document.querySelector(".nav-links");
 
-if (menuToggle) {
+if (menuToggle && navLinks) {
   menuToggle.addEventListener("click", () => {
     navLinks.classList.toggle("active");
   });
