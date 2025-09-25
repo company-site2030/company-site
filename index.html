@@ -4,14 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>شركة الإعلانات</title>
-  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/889/889140.png">
   <style>
+    /* الأساسيات */
     body {
       margin: 0;
       font-family: 'Tahoma', sans-serif;
-      background: #f4f7fa;
+      background: #f9f9f9;
       color: #222;
     }
+    a { text-decoration: none; }
+
+    /* الهيدر */
     header {
       background: #111;
       color: #fff;
@@ -40,7 +44,6 @@
     }
     .nav-links a {
       color: #fff;
-      text-decoration: none;
       font-size: 16px;
       transition: 0.3s;
     }
@@ -50,59 +53,43 @@
 
     /* القائمة للجوال */
     @media (max-width: 768px) {
-      .menu-toggle {
-        display: block;
-      }
+      .menu-toggle { display: block; }
       .nav-links {
         display: none;
         flex-direction: column;
-        background: rgba(0, 0, 0, 0.95);
+        background: rgba(0,0,0,0.95);
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
         padding: 80px 20px;
         z-index: 9999;
       }
-      .nav-links.active {
-        display: flex;
-      }
+      .nav-links.active { display: flex; }
       .nav-links a {
         font-size: 20px;
         margin: 15px 0;
       }
     }
 
-    section {
-      padding: 100px 20px;
+    /* بانر */
+    .banner {
+      background: url('https://images.unsplash.com/photo-1556761175-4b46a572b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      color: #fff;
+      padding: 180px 20px;
       text-align: center;
     }
-    section h2 {
-      font-size: 28px;
-      margin-bottom: 20px;
-      color: #111;
-    }
+    .banner h2 { font-size: 40px; margin-bottom: 15px; }
+    .banner p { font-size: 20px; }
+
+    /* الأقسام */
+    section { padding: 100px 20px; text-align: center; }
+    section h2 { font-size: 28px; margin-bottom: 20px; color: #111; }
     section p {
-      font-size: 18px;
-      line-height: 1.7;
-      max-width: 700px;
-      margin: auto;
-      color: #444;
+      font-size: 18px; line-height: 1.7;
+      max-width: 700px; margin: auto; color: #444;
     }
-    .banner {
-      background: url('https://source.unsplash.com/1600x600/?business,marketing') center/cover no-repeat;
-      color: #fff;
-      padding: 150px 20px;
-    }
-    .banner h2 {
-      font-size: 40px;
-      margin-bottom: 15px;
-    }
-    .banner p {
-      font-size: 20px;
-    }
-    .services, .works, .clients {
+
+    .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
@@ -114,19 +101,16 @@
       padding: 20px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       text-align: center;
+      transition: transform 0.3s;
     }
+    .card:hover { transform: translateY(-5px); }
     .card img {
       max-width: 100%;
       border-radius: 10px;
       margin-bottom: 15px;
     }
-    footer {
-      background: #111;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-    }
-    /* فورم تسجيل ودخول */
+
+    /* فورمات */
     .auth {
       max-width: 400px;
       margin: auto;
@@ -136,24 +120,23 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     .auth input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+      width: 100%; padding: 10px; margin: 10px 0;
+      border: 1px solid #ccc; border-radius: 6px;
     }
     .auth button {
-      width: 100%;
-      padding: 12px;
-      background: linear-gradient(90deg, #00d4ff, #0077ff);
-      border: none;
-      border-radius: 6px;
-      color: #fff;
-      font-size: 16px;
-      cursor: pointer;
+      width: 100%; padding: 12px;
+      background: linear-gradient(90deg,#00d4ff,#0077ff);
+      border: none; border-radius: 6px;
+      color: #fff; font-size: 16px; cursor: pointer;
     }
     .auth button:hover {
-      background: linear-gradient(90deg, #0077ff, #00d4ff);
+      background: linear-gradient(90deg,#0077ff,#00d4ff);
+    }
+
+    /* الفوتر */
+    footer {
+      background: #111; color: #fff;
+      padding: 20px; text-align: center;
     }
   </style>
 </head>
@@ -175,34 +158,34 @@
 
   <!-- بانر -->
   <section id="home" class="banner">
-    <h2>نقود حملتك الإعلانية للنجاح</h2>
-    <p>خبرة تمتد لأكثر من 10 سنوات في التسويق الرقمي والإعلانات المبتكرة.</p>
+    <h2>نحو مستقبل إعلاني ناجح</h2>
+    <p>نساعدك على إيصال رسالتك إلى جمهورك بأفضل الطرق الحديثة.</p>
   </section>
 
   <!-- عن الشركة -->
   <section id="about">
     <h2>عن الشركة</h2>
-    <p>تأسست شركة الإعلانات عام 2015، ومنذ ذلك الوقت ونحن نساعد مئات العملاء على تطوير أعمالهم وزيادة مبيعاتهم عبر حملات إعلانية ناجحة في مختلف المنصات.</p>
+    <p>منذ تأسيسنا عام 2015 ونحن نضع عملاءنا في قلب كل حملة إعلانية. رؤيتنا أن نصبح الشريك الاستراتيجي الأول في العالم العربي في مجال التسويق الرقمي.</p>
   </section>
 
   <!-- الخدمات -->
   <section id="services">
     <h2>الخدمات</h2>
-    <div class="services">
+    <div class="grid">
       <div class="card">
-        <img src="https://source.unsplash.com/400x300/?social,media" alt="خدمة">
-        <h3>إدارة وسائل التواصل</h3>
-        <p>بناء وإدارة الحملات على فيسبوك، إنستغرام، تويتر وغيرها.</p>
+        <img src="https://images.unsplash.com/photo-1508387021340-0f2fc2e5b5aa?auto=format&fit=crop&w=500&q=80" alt="">
+        <h3>إعلانات رقمية</h3>
+        <p>خطط إعلانية مدروسة على فيسبوك، إنستغرام، تويتر، وغيرها.</p>
       </div>
       <div class="card">
-        <img src="https://source.unsplash.com/400x300/?ads,marketing" alt="خدمة">
-        <h3>الإعلانات المدفوعة</h3>
-        <p>تحقيق أفضل النتائج عبر استراتيجيات إعلانات مدروسة.</p>
+        <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=500&q=80" alt="">
+        <h3>تصميم إبداعي</h3>
+        <p>تصاميم عصرية جذابة تبرز علامتك التجارية.</p>
       </div>
       <div class="card">
-        <img src="https://source.unsplash.com/400x300/?design,creative" alt="خدمة">
-        <h3>التصميم الإبداعي</h3>
-        <p>تصاميم عصرية تساعد علامتك التجارية على البروز.</p>
+        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=500&q=80" alt="">
+        <h3>تحليل البيانات</h3>
+        <p>متابعة أداء الحملات باستخدام أحدث أدوات التحليل.</p>
       </div>
     </div>
   </section>
@@ -210,16 +193,16 @@
   <!-- أعمالنا -->
   <section id="works">
     <h2>أعمالنا</h2>
-    <div class="works">
+    <div class="grid">
       <div class="card">
-        <img src="https://source.unsplash.com/400x300/?office,team" alt="عمل">
-        <h3>حملة كبرى</h3>
-        <p>رفع المبيعات بنسبة 70% لواحدة من أكبر شركات التقنية.</p>
+        <img src="https://images.unsplash.com/photo-1485217988980-11786ced9454?auto=format&fit=crop&w=500&q=80" alt="">
+        <h3>حملة لشركة تقنية</h3>
+        <p>زيادة المبيعات بنسبة 70% خلال 6 أشهر.</p>
       </div>
       <div class="card">
-        <img src="https://source.unsplash.com/400x300/?business,success" alt="عمل">
-        <h3>إطلاق منتج</h3>
-        <p>إطلاق منتج جديد مع وصول أكثر من مليون مستخدم.</p>
+        <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=500&q=80" alt="">
+        <h3>إطلاق منتج جديد</h3>
+        <p>وصول إلى أكثر من مليون مستخدم في الشهر الأول.</p>
       </div>
     </div>
   </section>
@@ -227,13 +210,13 @@
   <!-- آراء العملاء -->
   <section id="clients">
     <h2>آراء العملاء</h2>
-    <div class="clients">
+    <div class="grid">
       <div class="card">
-        <p>"شركة الإعلانات ساعدتنا نضاعف مبيعاتنا خلال 6 أشهر فقط!"</p>
+        <p>"أفضل تجربة تسويقية مررنا بها على الإطلاق، النتائج كانت مذهلة."</p>
         <h4>- أحمد، شركة تقنية</h4>
       </div>
       <div class="card">
-        <p>"احترافية ودقة في التنفيذ، أنصح بالتعامل معهم بشدة."</p>
+        <p>"خدمة راقية وفريق عمل مبدع، أنصح الجميع بالتعامل معهم."</p>
         <h4>- سارة، متجر إلكتروني</h4>
       </div>
     </div>
@@ -242,7 +225,7 @@
   <!-- اتصل بنا -->
   <section id="contact">
     <h2>اتصل بنا</h2>
-    <p>راسلنا عبر البريد: info@company.com أو عبر النموذج أدناه:</p>
+    <p>راسلنا عبر البريد: info@company.com</p>
     <div class="auth">
       <input type="text" placeholder="الاسم الكامل">
       <input type="email" placeholder="البريد الإلكتروني">
