@@ -1,74 +1,79 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>شركة الإعلانات</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>شركة الإعلانات — الرئيسية</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- الشريط العلوي -->
-  <header>
-    <div class="logo">شركة الإعلانات</div>
+  <header class="site-header">
+    <div class="brand">شركة الإعلانات</div>
     <nav>
-      <ul class="nav-links">
-        <li><a href="index.html">الرئيسية</a></li>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#home">الرئيسية</a></li>
         <li><a href="#about">عن الشركة</a></li>
         <li><a href="#success">نجاحاتنا</a></li>
         <li><a href="#works">أعمالنا</a></li>
         <li><a href="#clients">آراء العملاء</a></li>
-        <li><a href="#contact">تواصل معنا</a></li>
-        <li><a href="login.html">تسجيل الدخول</a></li>
+        <li><a href="#contact">اتصل بنا</a></li>
+        <li><a href="login.html">دخول</a></li>
         <li><a href="register.html">تسجيل</a></li>
       </ul>
-      <div class="menu-toggle" id="menu-toggle">☰</div>
+      <button class="menu-toggle" id="menu-toggle" aria-label="القائمة">☰</button>
     </nav>
   </header>
 
-  <!-- الرئيسية -->
-  <section class="hero">
-    <h1>مرحبا بكم في شركة الإعلانات</h1>
-    <p>نحن نصنع نجاحك ونروي قصتك من خلال حملات إعلانية إبداعية.</p>
-    <img src="https://source.unsplash.com/800x400/?business,success" alt="شركة إعلانات">
-  </section>
+  <main>
+    <section id="home" class="hero glass">
+      <div class="hero-left">
+        <h1>نحكي قصة علامتك التجارية</h1>
+        <p class="lead">نحن نبتكر حملات إعلانية ذكية، تصميمات جذابة، واستراتيجيات تنمو بأعمالك — شريكك في النجاح.</p>
+        <div class="hero-actions">
+          <a class="btn" href="register.html">ابدأ الآن</a>
+          <a class="btn ghost" href="#contact">تواصل معنا</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=900&q=80&auto=format&fit=crop" alt="إعلانات" />
+      </div>
+    </section>
 
-  <!-- عن الشركة -->
-  <section id="about" class="section">
-    <h2>عن الشركة</h2>
-    <p>تأسست شركتنا عام 2010، ومنذ ذلك الحين عملنا على تطوير استراتيجيات تسويقية مبتكرة تخدم عملاءنا محلياً وعالمياً.</p>
-    <img src="https://source.unsplash.com/600x300/?office,team" alt="عن الشركة">
-  </section>
+    <section id="about" class="section glass">
+      <h2>عن الشركة</h2>
+      <p>تأسست شركتنا لتقديم حلول تسويقية مبتكرة منذ 2010، نفخر بتحويل الأفكار إلى حملات تدرّ النتائج الحقيقية.</p>
+    </section>
 
-  <!-- النجاحات -->
-  <section id="success" class="section">
-    <h2>نجاحاتنا</h2>
-    <p>أطلقنا أكثر من 500 حملة ناجحة مع عملاء من مختلف القطاعات.</p>
-    <img src="https://source.unsplash.com/600x300/?success,growth" alt="نجاحاتنا">
-  </section>
+    <section id="success" class="section glass">
+      <h2>نجاحاتنا</h2>
+      <p>أكثر من 500 حملة ناجحة، عملاء محليون ودوليون، ونسب نمو ملموسة لعملائنا.</p>
+      <div class="cards">
+        <div class="card">زيادة المبيعات</div>
+        <div class="card">حملات مخصصة</div>
+        <div class="card">تقارير دورية</div>
+      </div>
+    </section>
 
-  <!-- الأعمال -->
-  <section id="works" class="section">
-    <h2>أعمالنا</h2>
-    <p>من الحملات الرقمية إلى الإعلانات التلفزيونية، نصمم أعمالاً تبقى في الذاكرة.</p>
-    <img src="https://source.unsplash.com/600x300/?advertising,creative" alt="أعمالنا">
-  </section>
+    <section id="works" class="section glass">
+      <h2>أعمالنا</h2>
+      <p>تصميمات بصرية، فيديوهات إعلانية، إدارة حملات إعلانية متكاملة.</p>
+    </section>
 
-  <!-- آراء العملاء -->
-  <section id="clients" class="section">
-    <h2>آراء العملاء</h2>
-    <blockquote>"شركة الإعلانات ساعدتنا في الوصول إلى جمهورنا المستهدف بطريقة مذهلة!"</blockquote>
-    <blockquote>"أفضل تجربة إعلانية عشناها مع فريقهم المبدع."</blockquote>
-  </section>
+    <section id="clients" class="section glass">
+      <h2>آراء العملاء</h2>
+      <blockquote>“فريق احترافي ونتائج ممتازة” — عميل راضٍ</blockquote>
+      <blockquote>“تحسّن واضح في المبيعات” — عميل آخر</blockquote>
+    </section>
 
-  <!-- تواصل معنا -->
-  <section id="contact" class="section">
-    <h2>تواصل معنا</h2>
-    <p>بريد إلكتروني: info@adscompany.com</p>
-    <p>هاتف: 123456789</p>
-  </section>
+    <section id="contact" class="section glass">
+      <h2>اتصل بنا</h2>
+      <p>✉️ info@ads-company.com</p>
+      <p>☎️ +123456789</p>
+    </section>
+  </main>
 
-  <footer>
-    <p>© 2025 شركة الإعلانات. جميع الحقوق محفوظة.</p>
+  <footer class="site-footer">
+    <p>© 2025 شركة الإعلانات — جميع الحقوق محفوظة</p>
   </footer>
 
   <script src="script.js"></script>
