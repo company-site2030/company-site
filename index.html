@@ -21,10 +21,7 @@
       position: sticky;
       top: 0;
     }
-    header h1 {
-      margin: 0;
-      font-size: 22px;
-    }
+    header h1 { margin: 0; font-size: 22px; }
     nav button {
       margin-left: 10px;
       padding: 8px 15px;
@@ -35,14 +32,8 @@
       font-weight: bold;
       cursor: pointer;
     }
-    .hero {
-      text-align: center;
-      padding: 60px 20px;
-    }
-    .hero h2 {
-      font-size: 32px;
-      margin-bottom: 20px;
-    }
+    .hero { text-align: center; padding: 60px 20px; }
+    .hero h2 { font-size: 32px; margin-bottom: 20px; }
     .section {
       padding: 40px 20px;
       text-align: center;
@@ -73,10 +64,7 @@
       font-weight: bold;
       cursor: pointer;
     }
-    button:hover {
-      transform: scale(1.05);
-    }
-    #dashboard, #register, #login { display: none; }
+    button:hover { transform: scale(1.05); }
     .hidden { display: none; }
   </style>
 </head>
@@ -84,31 +72,35 @@
   <header>
     <h1>🚀 شركة الإعلانات</h1>
     <nav>
-      <button onclick="showRegister()">تسجيل</button>
-      <button onclick="showLogin()">دخول</button>
+      <button onclick="showSection('home')">الرئيسية</button>
+      <button onclick="showSection('register')">تسجيل</button>
+      <button onclick="showSection('login')">دخول</button>
     </nav>
   </header>
 
-  <div class="hero">
-    <h2>مرحبًا بك في شركتنا</h2>
-    <p>نحن نقدم حلول إعلانية مبتكرة تساعدك على الوصول لعملائك بسرعة وفعالية.</p>
-  </div>
+  <!-- الصفحة الرئيسية -->
+  <div id="home">
+    <div class="hero">
+      <h2>مرحبًا بك في شركتنا</h2>
+      <p>نحن نقدم حلول إعلانية مبتكرة تساعدك على الوصول لعملائك بسرعة وفعالية.</p>
+    </div>
 
-  <div class="section">
-    <h3>عن الشركة</h3>
-    <p>شركة الإعلانات هي المنصة المثالية لتسويق منتجاتك وخدماتك. نقدم استراتيجيات تسويقية حديثة تضمن نتائج فعالة بأقل التكاليف.</p>
-  </div>
+    <div class="section">
+      <h3>عن الشركة</h3>
+      <p>شركة الإعلانات هي المنصة المثالية لتسويق منتجاتك وخدماتك. نقدم استراتيجيات تسويقية حديثة تضمن نتائج فعالة بأقل التكاليف.</p>
+    </div>
 
-  <div class="section">
-    <h3>خدماتنا</h3>
-    <p>📢 الحملات الإعلانية الرقمية<br>
-       🎯 استهداف دقيق للعملاء<br>
-       📊 تقارير وتحليلات لحظية<br>
-       🌍 وصول عالمي</p>
+    <div class="section">
+      <h3>خدماتنا</h3>
+      <p>📢 الحملات الإعلانية الرقمية<br>
+         🎯 استهداف دقيق للعملاء<br>
+         📊 تقارير وتحليلات لحظية<br>
+         🌍 وصول عالمي</p>
+    </div>
   </div>
 
   <!-- تسجيل -->
-  <div class="container" id="register">
+  <div class="container hidden" id="register">
     <h2>تسجيل حساب جديد</h2>
     <input type="text" id="regName" placeholder="الاسم الكامل" required>
     <input type="email" id="regEmail" placeholder="البريد الإلكتروني" required>
@@ -118,7 +110,7 @@
   </div>
 
   <!-- دخول -->
-  <div class="container" id="login">
+  <div class="container hidden" id="login">
     <h2>تسجيل دخول</h2>
     <input type="email" id="loginEmail" placeholder="البريد الإلكتروني" required>
     <input type="password" id="loginPassword" placeholder="كلمة المرور" required>
@@ -126,7 +118,7 @@
   </div>
 
   <!-- لوحة التحكم -->
-  <div class="container" id="dashboard">
+  <div class="container hidden" id="dashboard">
     <h2>مرحبا <span id="userName"></span> 👋</h2>
     <p>رصيدك الحالي: <span id="balance">0</span> USDT</p>
 
@@ -161,15 +153,13 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    function showLogin() {
-      document.getElementById("register").style.display = "none";
-      document.getElementById("login").style.display = "block";
-      document.getElementById("dashboard").style.display = "none";
-    }
-    function showRegister() {
-      document.getElementById("login").style.display = "none";
-      document.getElementById("register").style.display = "block";
-      document.getElementById("dashboard").style.display = "none";
+    // التحكم في الأقسام
+    function showSection(sectionId) {
+      const sections = ["home", "register", "login", "dashboard"];
+      sections.forEach(id => {
+        document.getElementById(id).classList.add("hidden");
+      });
+      document.getElementById(sectionId).classList.remove("hidden");
     }
 
     async function register() {
@@ -182,13 +172,10 @@
         const userCredential = await auth.createUserWithEmailAndPassword(email, password);
         const user = userCredential.user;
         await db.collection("users").doc(user.uid).set({
-          name: name,
-          email: email,
-          phone: phone,
-          balance: 0
+          name, email, phone, balance: 0
         });
         alert("تم التسجيل بنجاح!");
-        showLogin();
+        showSection("login");
       } catch (error) {
         alert(error.message);
       }
@@ -213,9 +200,7 @@
         const data = doc.data();
         document.getElementById("userName").innerText = data.name;
         document.getElementById("balance").innerText = data.balance;
-        document.getElementById("register").style.display = "none";
-        document.getElementById("login").style.display = "none";
-        document.getElementById("dashboard").style.display = "block";
+        showSection("dashboard");
       }
     }
 
@@ -233,12 +218,14 @@
 
     function logout() {
       auth.signOut();
-      document.getElementById("dashboard").style.display = "none";
+      showSection("home");
     }
 
     auth.onAuthStateChanged(user => {
       if (user) {
         loadDashboard(user);
+      } else {
+        showSection("home");
       }
     });
   </script>
