@@ -3,26 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>تسجيل حساب جديد - شركة الإعلانات</title>
+  <title>تسجيل حساب جديد</title>
   <style>
     body {
       margin: 0;
       font-family: 'Tahoma', sans-serif;
-      background: linear-gradient(135deg, rgba(0,0,0,0.85), rgba(50,50,50,0.85)),
-                  url('https://source.unsplash.com/1600x900/?business,finance');
+      background: linear-gradient(135deg, rgba(0,0,0,0.9), rgba(0,50,100,0.9)),
+                  url('https://source.unsplash.com/1600x900/?finance,technology');
       background-size: cover;
       background-attachment: fixed;
       color: #fff;
     }
 
     main {
-      max-width: 400px;
+      max-width: 420px;
       margin: 50px auto;
       padding: 25px;
       border-radius: 15px;
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 25px rgba(0,0,0,0.6);
       text-align: center;
     }
 
@@ -32,15 +32,15 @@
       width: 100%;
       padding: 12px;
       margin-bottom: 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+      border: none;
+      border-radius: 10px;
       font-size: 15px;
-      box-sizing: border-box;
-      background: #fff;
+      background: rgba(255,255,255,0.9);
       color: #000;
+      box-sizing: border-box;
     }
 
-    ::placeholder { color: #555; }
+    ::placeholder { color: #444; }
 
     button {
       width: 100%;
@@ -52,7 +52,7 @@
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: 0.3s;
     }
     button:hover { background: #008bbf; }
 
@@ -66,6 +66,7 @@
     <form onsubmit="register(); return false;">
       <input type="text" id="name" placeholder="الاسم الكامل" required>
       <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+      <input type="tel" id="phone" placeholder="رقم الجوال" required>
       <input type="password" id="password" placeholder="كلمة المرور" required>
       <button type="submit">تسجيل</button>
     </form>
@@ -73,27 +74,36 @@
   </main>
 
   <script type="module">
-    import { getAuth, createUserWithEmailAndPassword, updateProfile } 
+    import { getAuth, createUserWithEmailAndPassword, updateProfile }
       from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc }
+      from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { app } from "./firebase.js";
 
-    const auth = getAuth();
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-    window.register = () => {
+    window.register = async () => {
       const name = document.getElementById("name").value;
       const email = document.getElementById("email").value;
+      const phone = document.getElementById("phone").value;
       const password = document.getElementById("password").value;
 
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          return updateProfile(userCredential.user, { displayName: name });
-        })
-        .then(() => {
-          alert("✅ تم إنشاء الحساب بنجاح");
-          window.location.href = "dashboard.html";
-        })
-        .catch((error) => {
-          alert("خطأ: " + error.message);
+      try {
+        const userCred = await createUserWithEmailAndPassword(auth, email, password);
+        await updateProfile(userCred.user, { displayName: name });
+
+        await setDoc(doc(db, "users", userCred.user.uid), {
+          name, email, phone,
+          balance: 0,
+          transactions: []
         });
+
+        alert("✅ تم إنشاء الحساب بنجاح");
+        window.location.href = "dashboard.html";
+      } catch (err) {
+        alert("❌ خطأ: " + err.message);
+      }
     };
   </script>
 </body>
