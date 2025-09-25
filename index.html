@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>شركة الإعلانات</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -43,7 +44,7 @@
       max-width: 900px;
     }
     .container {
-      max-width: 400px; /* 🔹 أصغر من قبل */
+      max-width: 400px;
       margin: 30px auto;
       padding: 25px;
       background: rgba(255,255,255,0.1);
@@ -53,7 +54,7 @@
     }
     input, button {
       display: block;
-      width: 90%; /* 🔹 عرض أنسب */
+      width: 90%;
       margin: 10px auto;
       padding: 12px;
       border: none;
@@ -67,11 +68,22 @@
     }
     button:hover { transform: scale(1.05); }
     .hidden { display: none; }
+    .balance {
+      font-size: 28px;
+      font-weight: bold;
+      color: #00f5d4;
+      margin: 15px 0;
+    }
+    .action-btns button {
+      width: 40%;
+      display: inline-block;
+      margin: 10px;
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>🚀 شركة الإعلانات</h1>
+    <h1>🌐 شركة الإعلانات</h1>
     <nav>
       <button onclick="showSection('home')">الرئيسية</button>
       <button onclick="showSection('register')">تسجيل</button>
@@ -80,66 +92,67 @@
   </header>
 
   <!-- الصفحة الرئيسية -->
-  <div id="home">
-    <div class="hero">
-      <h2>مرحبًا بك في شركتنا</h2>
-      <p>نحن نقدم حلول إعلانية مبتكرة تساعدك على الوصول لعملائك بسرعة وفعالية.</p>
-    </div>
-
-    <div class="section">
-      <h3>عن الشركة</h3>
-      <p>شركة الإعلانات هي المنصة المثالية لتسويق منتجاتك وخدماتك. نقدم استراتيجيات تسويقية حديثة تضمن نتائج فعالة بأقل التكاليف.</p>
-    </div>
-
-    <div class="section">
-      <h3>خدماتنا</h3>
-      <p>📢 الحملات الإعلانية الرقمية<br>
-         🎯 استهداف دقيق للعملاء<br>
-         📊 تقارير وتحليلات لحظية<br>
-         🌍 وصول عالمي</p>
-    </div>
+  <div id="home" class="hero">
+    <h2>مرحباً بك في شركتنا</h2>
+    <p>نحن شركة متخصصة في مجال الإعلانات الرقمية، نقدم حلولاً مبتكرة لتسويق أعمالك وزيادة وصولك إلى العملاء.</p>
   </div>
 
   <!-- تسجيل -->
-  <div class="container hidden" id="register">
-    <h2>تسجيل حساب جديد</h2>
-    <input type="text" id="regName" placeholder="الاسم الكامل" required>
-    <input type="email" id="regEmail" placeholder="البريد الإلكتروني" required>
-    <input type="text" id="regPhone" placeholder="رقم الهاتف" required>
-    <input type="password" id="regPassword" placeholder="كلمة المرور" required>
+  <div id="register" class="container hidden">
+    <h2>إنشاء حساب جديد</h2>
+    <input type="text" id="regName" placeholder="الاسم الكامل">
+    <input type="email" id="regEmail" placeholder="البريد الإلكتروني">
+    <input type="text" id="regPhone" placeholder="رقم الهاتف">
+    <input type="password" id="regPassword" placeholder="كلمة المرور">
     <button onclick="register()">تسجيل</button>
   </div>
 
   <!-- دخول -->
-  <div class="container hidden" id="login">
-    <h2>تسجيل دخول</h2>
-    <input type="email" id="loginEmail" placeholder="البريد الإلكتروني" required>
-    <input type="password" id="loginPassword" placeholder="كلمة المرور" required>
+  <div id="login" class="container hidden">
+    <h2>تسجيل الدخول</h2>
+    <input type="email" id="loginEmail" placeholder="البريد الإلكتروني">
+    <input type="password" id="loginPassword" placeholder="كلمة المرور">
     <button onclick="login()">دخول</button>
   </div>
 
   <!-- لوحة التحكم -->
-  <div class="container hidden" id="dashboard">
+  <div id="dashboard" class="container hidden">
     <h2>مرحبا <span id="userName"></span> 👋</h2>
-    <p>رصيدك الحالي: <span id="balance">0</span> USDT</p>
+    <p>📧 <span id="userEmail"></span></p>
+    <h3>رصيدك الحالي</h3>
+    <p class="balance"><span id="balance">0</span> USDT</p>
 
-    <h3>💰 إيداع</h3>
-    <p>انسخ هذا العنوان وحول USDT (ERC20):</p>
-    <p><b>0x7F8125C197B845E1F0682A9846B94A11cA9d9743</b></p>
+    <div class="action-btns">
+      <button onclick="showDeposit()">💰 إيداع</button>
+      <button onclick="showWithdraw()">🏧 سحب</button>
+    </div>
 
-    <h3>🏧 سحب</h3>
-    <input type="text" id="withdrawAddress" placeholder="أدخل عنوان USDT للسحب">
-    <button onclick="requestWithdraw()">طلب سحب</button>
+    <!-- قسم الإيداع -->
+    <div id="depositSection" class="hidden">
+      <h3>💰 تفاصيل الإيداع</h3>
+      <p>انسخ هذا العنوان وحول USDT (ERC20):</p>
+      <p style="word-break:break-all;">
+        <b>0x7F8125C197B845E1F0682A9846B94A11cA9d9743</b>
+      </p>
+    </div>
 
-    <button onclick="logout()">تسجيل خروج</button>
+    <!-- قسم السحب -->
+    <div id="withdrawSection" class="hidden">
+      <h3>🏧 طلب سحب</h3>
+      <input type="text" id="withdrawAddress" placeholder="أدخل عنوان USDT للسحب">
+      <button onclick="requestWithdraw()">تأكيد السحب</button>
+    </div>
+
+    <button style="margin-top:30px; background:#ff4d6d;" onclick="logout()">تسجيل خروج</button>
   </div>
 
-  <!-- Firebase v8 -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <!-- Firebase + JS -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 
   <script>
+    // إعداد Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyCFYr3mTYs3BFvtnIcuFEjkSfJV3kPrzXk",
       authDomain: "ads-company-2e012.firebaseapp.com",
@@ -149,17 +162,19 @@
       appId: "1:706203585878:web:98c58764c1c7f95f1e5af7",
       measurementId: "G-BKSKHM3Z2S"
     };
-
-    firebase.initializeApp(firebaseConfig);
+    const app = firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    function showSection(sectionId) {
-      const sections = ["home", "register", "login", "dashboard"];
-      sections.forEach(id => document.getElementById(id).classList.add("hidden"));
-      document.getElementById(sectionId).classList.remove("hidden");
+    // تبديل الأقسام
+    function showSection(id) {
+      document.querySelectorAll("div").forEach(div => {
+        if (div.id && div.id !== "dashboard") div.classList.add("hidden");
+      });
+      document.getElementById(id).classList.remove("hidden");
     }
 
+    // تسجيل
     async function register() {
       const name = document.getElementById("regName").value;
       const email = document.getElementById("regEmail").value;
@@ -169,57 +184,75 @@
       try {
         const userCredential = await auth.createUserWithEmailAndPassword(email, password);
         const user = userCredential.user;
-        await db.collection("users").doc(user.uid).set({ name, email, phone, balance: 0 });
+        await db.collection("users").doc(user.uid).set({
+          name, email, phone, balance: 0
+        });
         alert("تم التسجيل بنجاح!");
-        showSection("login");
-      } catch (error) {
-        alert(error.message);
-      }
-    }
-
-    async function login() {
-      const email = document.getElementById("loginEmail").value;
-      const password = document.getElementById("loginPassword").value;
-
-      try {
-        const userCredential = await auth.signInWithEmailAndPassword(email, password);
-        const user = userCredential.user;
         loadDashboard(user);
       } catch (error) {
         alert(error.message);
       }
     }
 
+    // دخول
+    async function login() {
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+
+      try {
+        const userCredential = await auth.signInWithEmailAndPassword(email, password);
+        loadDashboard(userCredential.user);
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+
+    // تحميل لوحة التحكم
     async function loadDashboard(user) {
       const doc = await db.collection("users").doc(user.uid).get();
       if (doc.exists) {
         const data = doc.data();
         document.getElementById("userName").innerText = data.name;
+        document.getElementById("userEmail").innerText = data.email;
         document.getElementById("balance").innerText = data.balance;
         showSection("dashboard");
       }
     }
 
+    // عرض الإيداع والسحب
+    function showDeposit() {
+      document.getElementById("depositSection").classList.remove("hidden");
+      document.getElementById("withdrawSection").classList.add("hidden");
+    }
+    function showWithdraw() {
+      document.getElementById("withdrawSection").classList.remove("hidden");
+      document.getElementById("depositSection").classList.add("hidden");
+    }
+
+    // طلب سحب
     async function requestWithdraw() {
       const address = document.getElementById("withdrawAddress").value;
       const user = auth.currentUser;
-      if (!address) return alert("أدخل عنوان USDT");
+      if (!address) return alert("يرجى إدخال عنوان محفظة.");
+
       await db.collection("withdrawRequests").add({
         userId: user.uid,
-        address: address,
+        address,
         date: new Date()
       });
-      alert("تم إرسال طلب السحب. سنتواصل معك قريبا.");
+      alert("تم إرسال طلب السحب بنجاح!");
+      document.getElementById("withdrawAddress").value = "";
     }
 
+    // تسجيل خروج
     function logout() {
       auth.signOut();
       showSection("home");
     }
 
+    // متابعة حالة تسجيل الدخول
     auth.onAuthStateChanged(user => {
       if (user) loadDashboard(user);
-      else showSection("home");
     });
   </script>
 </body>
