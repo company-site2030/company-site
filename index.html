@@ -43,17 +43,18 @@
       max-width: 900px;
     }
     .container {
-      max-width: 500px;
-      margin: 20px auto;
-      padding: 20px;
+      max-width: 400px; /* 🔹 أصغر من قبل */
+      margin: 30px auto;
+      padding: 25px;
       background: rgba(255,255,255,0.1);
       border-radius: 15px;
       backdrop-filter: blur(10px);
+      text-align: center;
     }
     input, button {
       display: block;
-      width: 100%;
-      margin: 10px 0;
+      width: 90%; /* 🔹 عرض أنسب */
+      margin: 10px auto;
       padding: 12px;
       border: none;
       border-radius: 10px;
@@ -153,12 +154,9 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    // التحكم في الأقسام
     function showSection(sectionId) {
       const sections = ["home", "register", "login", "dashboard"];
-      sections.forEach(id => {
-        document.getElementById(id).classList.add("hidden");
-      });
+      sections.forEach(id => document.getElementById(id).classList.add("hidden"));
       document.getElementById(sectionId).classList.remove("hidden");
     }
 
@@ -171,9 +169,7 @@
       try {
         const userCredential = await auth.createUserWithEmailAndPassword(email, password);
         const user = userCredential.user;
-        await db.collection("users").doc(user.uid).set({
-          name, email, phone, balance: 0
-        });
+        await db.collection("users").doc(user.uid).set({ name, email, phone, balance: 0 });
         alert("تم التسجيل بنجاح!");
         showSection("login");
       } catch (error) {
@@ -222,11 +218,8 @@
     }
 
     auth.onAuthStateChanged(user => {
-      if (user) {
-        loadDashboard(user);
-      } else {
-        showSection("home");
-      }
+      if (user) loadDashboard(user);
+      else showSection("home");
     });
   </script>
 </body>
