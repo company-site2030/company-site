@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>تسجيل الدخول</title>
+  <title>دخول</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <h1>شركة الإعلانات</h1>
+    <div class="logo">شركة الإعلانات</div>
     <div class="menu-toggle">☰</div>
     <nav class="nav-links">
       <a href="index.html">الرئيسية</a>
@@ -21,10 +21,16 @@
       <a href="login.html">دخول</a>
     </nav>
   </header>
-  <section>
+
+  <section class="form-section">
     <h2>تسجيل الدخول</h2>
-    <p>نموذج تسجيل الدخول سيُضاف هنا لاحقاً.</p>
+    <form>
+      <input type="email" placeholder="البريد الإلكتروني" required>
+      <input type="password" placeholder="كلمة المرور" required>
+      <button type="submit">دخول</button>
+    </form>
   </section>
+
   <footer>
     <p>© 2025 جميع الحقوق محفوظة - شركة الإعلانات</p>
   </footer>
