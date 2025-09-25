@@ -1,76 +1,67 @@
-/* ==============
-   إعدادات أساسية
-================= */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Cairo", sans-serif;
-}
-
+/* إعدادات عامة */
 body {
-  background: linear-gradient(135deg, #1e1e2f, #2d2d44);
+  margin: 0;
+  font-family: 'Cairo', sans-serif;
+  background: linear-gradient(135deg, #1e1e2f, #2a2a40);
   color: #fff;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  line-height: 1.6;
 }
 
-/* ==============
-   الهيدر (Header)
-================= */
+/* الرأس */
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
   background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(12px);
+  padding: 15px 20px;
   position: sticky;
   top: 0;
   z-index: 1000;
+  backdrop-filter: blur(10px);
 }
 
 .logo {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: bold;
-  white-space: nowrap;
+  color: #00d9ff;
 }
 
+/* القائمة */
 .nav-links {
   display: flex;
   gap: 15px;
 }
 
 .nav-links a {
-  text-decoration: none;
   color: #fff;
-  font-weight: 500;
-  transition: 0.3s;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s;
 }
 
 .nav-links a:hover {
-  color: #00d4ff;
+  color: #00d9ff;
 }
 
-/* زر القائمة (للجوال) */
+/* زر القائمة للجوال */
 .menu-toggle {
   display: none;
   font-size: 1.8rem;
   cursor: pointer;
 }
 
-/* للجوال */
+/* القائمة للجوال */
 @media (max-width: 768px) {
   .nav-links {
     display: none;
     flex-direction: column;
+    background: rgba(0, 0, 0, 0.9);
     position: absolute;
     top: 60px;
-    right: 20px;
-    background: rgba(0, 0, 0, 0.9);
-    padding: 15px;
-    border-radius: 12px;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
   }
 
   .nav-links.active {
@@ -79,121 +70,52 @@ header {
 
   .menu-toggle {
     display: block;
+    color: #fff;
   }
 }
 
-/* ==============
-   المحتوى الأساسي
-================= */
+/* المحتوى الرئيسي */
 .main-content {
-  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  height: 80vh;
   text-align: center;
 }
 
 .glass-section {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(12px);
-  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 15px;
   padding: 30px;
-  max-width: 450px;
-  width: 100%;
+  margin: 20px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  animation: fadeIn 0.6s ease;
+  backdrop-filter: blur(10px);
 }
 
-.glass-section h2,
-.glass-section h3 {
-  margin-bottom: 15px;
-  color: #00d4ff;
-}
-
-.glass-section p {
-  margin-bottom: 10px;
-}
-
-/* ==============
-   النماذج
-================= */
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-input {
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-  outline: none;
-  font-size: 1rem;
+.glass-section h1, .glass-section h2 {
+  color: #00d9ff;
 }
 
 button {
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-  background: #00d4ff;
+  background: #00d9ff;
   color: #000;
-  font-weight: bold;
+  border: none;
+  padding: 12px 20px;
+  margin-top: 15px;
+  border-radius: 8px;
+  font-size: 1rem;
   cursor: pointer;
   transition: 0.3s;
 }
 
 button:hover {
-  background: #00aacc;
+  background: #009ec1;
 }
 
-/* ==============
-   لوحة التحكم
-================= */
-.dashboard {
-  text-align: right;
-}
-
-.dashboard-actions {
-  display: flex;
-  gap: 15px;
-  margin-top: 15px;
-}
-
-.wallet {
-  word-break: break-all;
-  background: rgba(0, 0, 0, 0.3);
-  padding: 8px;
-  border-radius: 8px;
-  margin: 10px 0;
-}
-
-/* إخفاء/إظهار */
-.hidden {
-  display: none;
-}
-
-/* ==============
-   الفوتر
-================= */
+/* الفوتر */
 footer {
+  background: rgba(0, 0, 0, 0.5);
   text-align: center;
   padding: 15px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(12px);
-  font-size: 0.9rem;
-}
-
-/* ==============
-   أنيميشن
-================= */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  margin-top: 30px;
 }
