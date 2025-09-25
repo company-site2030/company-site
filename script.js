@@ -1,108 +1,82 @@
-// ✅ Firebase إعداد
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } 
-  from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc } 
-  from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+// Robust menu + small Firebase hooks (menu-focused)
+// ضع هذا في ملف script.js (غير المحتوى القديم بالكامل)
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCFYr3mTYs3BFvtnIcuFEjkSfJV3kPrzXk",
-  authDomain: "ads-company-2e012.firebaseapp.com",
-  projectId: "ads-company-2e012",
-  storageBucket: "ads-company-2e012.appspot.com",
-  messagingSenderId: "706203585878",
-  appId: "1:706203585878:web:98c58764c1c7f95f1e5af7",
-  measurementId: "G-BKSKHM3Z2S"
-};
+(function(){
+  // ---- MENU TOGGLE (robust, works even لو العناصر بأسماء مختلفة) ----
+  document.addEventListener('DOMContentLoaded', () => {
+    // หา جميع عناصر القائمة (menu-toggle) بغض النظر عن id أو class
+    const toggles = Array.from(document.querySelectorAll('.menu-toggle, [id="menu-toggle"], [data-role="menu-toggle"]'));
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+    if (toggles.length === 0) {
+      console.warn('menu-toggle: لم أجد أي عنصر .menu-toggle أو #menu-toggle. تأكد من وجود زر ☰ في الهيدر.');
+    }
 
-// ✅ القائمة (٣ شخطات للجوال)
-const menuToggle = document.getElementById("menu-toggle");
-const navLinks = document.getElementById("nav-links");
+    toggles.forEach(toggle => {
+      // حاول إيجاد العنصر nav-links في نفس header أو nav
+      const container = toggle.closest('header') || toggle.closest('nav') || document;
+      let navLinks = container.querySelector('.nav-links') || document.querySelector('.nav-links');
 
-if (menuToggle && navLinks) {
-  menuToggle.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
-  });
-}
+      if (!navLinks) {
+        console.warn('menu-toggle: لم أجد .nav-links مرتبطة بهذا الزر. تحقق من HTML (ضع .nav-links داخل header أو nav).', toggle);
+        return;
+      }
 
-// ✅ تسجيل مستخدم جديد
-const registerForm = document.getElementById("register-form");
-if (registerForm) {
-  registerForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const name = document.getElementById("name").value;
-    const phone = document.getElementById("phone").value;
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+      // Accessibility attributes
+      toggle.setAttribute('role', 'button');
+      toggle.setAttribute('tabindex', '0');
+      toggle.setAttribute('aria-controls', navLinks.id || 'navlinks');
+      toggle.setAttribute('aria-expanded', navLinks.classList.contains('active') ? 'true' : 'false');
 
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
+      // Toggle function
+      function toggleMenu() {
+        const isActive = navLinks.classList.toggle('active');
+        toggle.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+        // منع السحب/تمرير الخلفية عند فتح القائمة
+        document.body.style.overflow = isActive ? 'hidden' : '';
+      }
 
-      await setDoc(doc(db, "users", user.uid), {
-        name,
-        phone,
-        email,
-        balance: 0
+      // Click + keyboard
+      toggle.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(); });
+      toggle.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); toggleMenu(); }
       });
 
-      alert("تم التسجيل بنجاح ✅");
-      window.location.href = "login.html";
-    } catch (error) {
-      alert("خطأ: " + error.message);
-    }
+      // إغلاق القائمة عند الضغط على أي رابط داخلها
+      navLinks.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+          navLinks.classList.remove('active');
+          toggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        });
+      });
+
+      // إغلاق القائمة عند الضغط خارجها
+      document.addEventListener('click', (ev) => {
+        if (!navLinks.classList.contains('active')) return;
+        // لو النقر خارج الحاوية، اقفل
+        if (!container.contains(ev.target)) {
+          navLinks.classList.remove('active');
+          toggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        }
+      });
+
+      // منع تداخل اللمس (touch) — بعض الأجهزة تحتاج هذا
+      document.addEventListener('touchstart', (ev) => {
+        if (!navLinks.classList.contains('active')) return;
+        if (!container.contains(ev.target)) {
+          navLinks.classList.remove('active');
+          toggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        }
+      }, {passive: true});
+    });
   });
-}
 
-// ✅ تسجيل الدخول
-const loginForm = document.getElementById("login-form");
-if (loginForm) {
-  loginForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const email = document.getElementById("login-email").value;
-    const password = document.getElementById("login-password").value;
+  // ---- small debug helper (يمكنك حذفها لاحقاً) ----
+  window.__menuDebug = () => {
+    console.log('toggles:', document.querySelectorAll('.menu-toggle, #menu-toggle'));
+    console.log('nav-links:', document.querySelectorAll('.nav-links'));
+  };
 
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      window.location.href = "dashboard.html";
-    } catch (error) {
-      alert("خطأ: " + error.message);
-    }
-  });
-}
-
-// ✅ عرض بيانات المستخدم في لوحة التحكم
-async function loadDashboard() {
-  const user = auth.currentUser;
-  if (user) {
-    const docRef = doc(db, "users", user.uid);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const data = docSnap.data();
-      document.getElementById("user-name").textContent = data.name;
-      document.getElementById("user-phone").textContent = data.phone;
-      document.getElementById("user-balance").textContent = data.balance + " $";
-    }
-  }
-}
-
-// ✅ تسجيل الخروج
-const logoutBtn = document.getElementById("logout");
-if (logoutBtn) {
-  logoutBtn.addEventListener("click", async () => {
-    await signOut(auth);
-    window.location.href = "login.html";
-  });
-}
-
-// ✅ تشغيل لوحة التحكم
-window.addEventListener("load", () => {
-  if (window.location.pathname.includes("dashboard.html")) {
-    loadDashboard();
-  }
-});
+})();
