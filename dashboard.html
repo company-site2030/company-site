@@ -1,57 +1,71 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>لوحة العميل</title>
-<link rel="stylesheet" href="style.css"></head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>حسابي - شركة الإعلانات</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 <body>
-<header class="topbar">
-  <div class="logo">شركة الإعلانات</div>
-  <div class="menu-toggle" id="menuToggle4">☰</div>
-  <nav class="nav-links" id="navLinks4">
-    <a href="index.html">الرئيسية</a>
-    <a href="contact.html">اتصل بنا</a>
-    <a href="#" id="logoutBtn">تسجيل خروج</a>
-  </nav>
-</header>
+  <!-- رأس الموقع -->
+  <header>
+    <div class="logo">شركة الإعلانات</div>
+    <div class="menu-toggle">☰</div>
+    <nav class="nav-links">
+      <a href="index.html">الرئيسية</a>
+      <a href="#" id="logoutBtn">تسجيل الخروج</a>
+    </nav>
+  </header>
 
-<main class="main-content">
-  <section class="section glass form-card">
-    <h2>مرحباً، <span id="uName">...</span></h2>
-    <p>📧 <span id="uEmail">...</span> — 📞 <span id="uPhone">...</span></p>
-    <div class="balance-card card">
-      <h3>رصيدك</h3>
-      <p class="big" id="uBalance">0</p>
-    </div>
+  <!-- لوحة العميل -->
+  <main class="main-content">
+    <section class="glass-section dashboard">
+      <h2>مرحبا <span id="clientName">العميل</span> 👋</h2>
+      <p><strong>البريد الإلكتروني:</strong> <span id="clientEmail"></span></p>
+      <p><strong>رقم الهاتف:</strong> <span id="clientPhone"></span></p>
+      <p><strong>الرصيد الحالي:</strong> <span id="clientBalance">0</span> $</p>
 
-    <div class="row">
-      <button class="btn" id="showDeposit">💰 إيداع</button>
-      <button class="btn outline" id="showWithdraw">🏧 سحب</button>
-    </div>
+      <div class="dashboard-actions">
+        <button id="depositBtn">إيداع</button>
+        <button id="withdrawBtn">سحب</button>
+      </div>
+    </section>
 
-    <div id="depositPanel" class="panel hidden">
-      <h4>عنوان إيداع USDT (ERC20)</h4>
-      <p class="mono">0x7F8125C197B845E1F0682A9846B94A11cA9d9743 <button id="copyAddr" class="small">نسخ</button></p>
-      <p class="muted">بعد التحويل، أرسل لنا دليل التحويل عبر صفحة الاتصالات أو راسلنا على الإيميل.</p>
-    </div>
+    <!-- نافذة الإيداع -->
+    <section id="depositSection" class="glass-section hidden">
+      <h3>إيداع رصيد</h3>
+      <p>أرسل USDT (ERC20) إلى العنوان التالي:</p>
+      <p class="wallet">0x7F8125C197B845E1F0682A9846B94A11cA9d9743</p>
+      <button onclick="copyWallet()">نسخ العنوان</button>
+    </section>
 
-    <div id="withdrawPanel" class="panel hidden">
-      <h4>طلب سحب</h4>
-      <input id="withdrawAddr" placeholder="أدخل عنوان محفظة USDT">
-      <input id="withdrawAmount" placeholder="المبلغ (USDT)">
-      <button id="sendWithdraw" class="btn">إرسال طلب السحب</button>
-      <h4 style="margin-top:18px">طلباتك السابقة</h4>
-      <table class="tbl"><thead><tr><th>#</th><th>العنوان</th><th>المبلغ</th><th>التاريخ</th><th>الحالة</th></tr></thead><tbody id="withdrawTable"><tr><td colspan="5">لا توجد طلبات</td></tr></tbody></table>
-    </div>
-  </section>
-</main>
+    <!-- نافذة السحب -->
+    <section id="withdrawSection" class="glass-section hidden">
+      <h3>سحب رصيد</h3>
+      <form id="withdrawForm">
+        <input type="text" id="usdtAddress" placeholder="أدخل عنوان USDT (ERC20)" required>
+        <input type="number" id="withdrawAmount" placeholder="المبلغ $" required>
+        <button type="submit">طلب سحب</button>
+      </form>
+    </section>
+  </main>
 
-<footer class="footer glass">© 2025 شركة الإعلانات</footer>
+  <footer>
+    <p>© 2025 جميع الحقوق محفوظة - شركة الإعلانات</p>
+  </footer>
 
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-<script>
-  // config available in script.js
-</script>
-<script src="script.js"></script>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+  <script src="script.js"></script>
+
+  <script>
+    // نسخ عنوان المحفظة
+    function copyWallet() {
+      navigator.clipboard.writeText("0x7F8125C197B845E1F0682A9846B94A11cA9d9743");
+      alert("تم نسخ عنوان المحفظة ✅");
+    }
+  </script>
 </body>
 </html>

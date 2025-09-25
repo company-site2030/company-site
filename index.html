@@ -1,129 +1,76 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>شركة الإعلانات</title>
-<link rel="icon" href="favicon.png">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شركة الإعلانات</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="topbar">
-  <div class="logo">شركة الإعلانات</div>
-  <div class="menu-toggle" id="menuToggle">☰</div>
-  <nav class="nav-links" id="navLinks">
-    <a href="index.html">الرئيسية</a>
-    <a href="about.html">عن الشركة</a>
-    <a href="services.html">الخدمات</a>
-    <a href="works.html">أعمالنا</a>
-    <a href="clients.html">آراء العملاء</a>
-    <a href="contact.html">اتصل بنا</a>
-    <a href="register.html" class="accent">تسجيل</a>
-    <a href="login.html">دخول</a>
-  </nav>
-</header>
+  <!-- رأس الموقع -->
+  <header>
+    <div class="logo">شركة الإعلانات</div>
+    <div class="menu-toggle">☰</div>
+    <nav class="nav-links">
+      <a href="index.html">الرئيسية</a>
+      <a href="#about">عن الشركة</a>
+      <a href="#services">الخدمات</a>
+      <a href="#works">أعمالنا</a>
+      <a href="#testimonials">آراء العملاء</a>
+      <a href="#contact">اتصل بنا</a>
+      <a href="register.html">تسجيل</a>
+      <a href="login.html">دخول</a>
+    </nav>
+  </header>
 
-<main class="main-content">
-  <section class="hero glass" id="home">
-    <div class="hero-inner">
-      <h1>نقود حملتك الإعلانية نحو النجاح</h1>
-      <p>تجارب مُثبتة، استراتيجيات ذكية، وتصاميم تجذب الانتباه — نُحوّل ميزانياتك إلى نتائج.</p>
-      <a href="services.html" class="btn">اطلع خدماتنا</a>
-    </div>
+  <!-- الرئيسية -->
+  <section class="hero" id="home">
+    <h1>أهلاً بكم في شركة الإعلانات</h1>
+    <p>شريكك الأول للنجاح والتسويق الرقمي.</p>
   </section>
 
-  <section class="section glass">
+  <!-- عن الشركة -->
+  <section id="about" class="glass-section">
     <h2>عن الشركة</h2>
-    <p>تأسست شركة الإعلانات عام 2015 برؤية واضحة: تقديم حلول تسويقية رقمية متكاملة ترفع من عائد الاستثمار. فريقنا يجمع بين خبراء التسويق، المحللين، ومصممي الإبداع لتقديم حملات قوية وقابلة للقياس.</p>
-    <div class="columns">
-      <div class="card">
-        <h3>التأسيس</h3>
-        <p>بدأنا كمجموعة صغيرة ونمونا لخدمة مئات المشاريع المحلية والإقليمية.</p>
-      </div>
-      <div class="card">
-        <h3>رؤيتنا</h3>
-        <p>أن نكون الشريك التسويقي الأكثر موثوقية للشركات التي تطمح للنمو.</p>
-      </div>
-      <div class="card">
-        <h3>قيمنا</h3>
-        <p>وضوح، قياس، ونتائج.</p>
-      </div>
-    </div>
+    <p>تأسست شركتنا عام 2010، ونجحنا في خدمة مئات العملاء في مجال التسويق والإعلانات الرقمية...</p>
   </section>
 
-  <section class="section glass" id="services">
-    <h2>خدماتنا</h2>
-    <div class="columns">
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1508387021340-0f2fc2e5b5aa?auto=format&fit=crop&w=800&q=60" alt="social">
-        <h3>تسويق عبر السوشيال ميديا</h3>
-        <p>حملات مستهدفة، محتوى جذاب، وتقارير أداء دقيقة.</p>
-      </div>
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=60" alt="ads">
-        <h3>إعلانات مدفوعة</h3>
-        <p>قنوات متعددة (Google, Facebook, Instagram) مع تحسين ميزانية يومية وCPA منخفض.</p>
-      </div>
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=60" alt="design">
-        <h3>تصميم إبداعي</h3>
-        <p>هويات بصرية وتصاميم إعلانية تناسب العلامة التجارية والهدف.</p>
-      </div>
-    </div>
+  <!-- الخدمات -->
+  <section id="services" class="glass-section">
+    <h2>الخدمات</h2>
+    <ul>
+      <li>إدارة الحملات الإعلانية</li>
+      <li>تصميم الهوية البصرية</li>
+      <li>التسويق عبر السوشال ميديا</li>
+      <li>إعلانات جوجل</li>
+    </ul>
   </section>
 
-  <section class="section glass" id="works">
+  <!-- أعمالنا -->
+  <section id="works" class="glass-section">
     <h2>أعمالنا</h2>
-    <div class="columns">
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1485217988980-11786ced9454?auto=format&fit=crop&w=800&q=60" alt="work">
-        <h3>حملة تقنية</h3>
-        <p>رفع المبيعات بنسبة 70% خلال 6 أشهر.</p>
-      </div>
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=800&q=60" alt="work2">
-        <h3>إطلاق منتج</h3>
-        <p>وصول إلى مليون مستخدم وتقارير أداء دقيقة.</p>
-      </div>
-    </div>
+    <p>نفخر بعرض مجموعة من المشاريع الناجحة...</p>
   </section>
 
-  <section class="section glass" id="clients">
+  <!-- آراء العملاء -->
+  <section id="testimonials" class="glass-section">
     <h2>آراء العملاء</h2>
-    <div class="columns">
-      <div class="card">
-        <p>“خدمة مهنية ونتائج ملموسة — أنصح بالتعامل معهم.”</p>
-        <h4>- أحمد</h4>
-      </div>
-      <div class="card">
-        <p>“التواصل والنتائج على مستوى عالي جدًا.”</p>
-        <h4>- سارة</h4>
-      </div>
-    </div>
+    <blockquote>“خدمة ممتازة ودعم متواصل!”</blockquote>
+    <blockquote>“أفضل شركة تعاملنا معها.”</blockquote>
   </section>
 
-  <section class="section glass" id="contact">
+  <!-- اتصل بنا -->
+  <section id="contact" class="glass-section">
     <h2>اتصل بنا</h2>
-    <p>البريد: info@company.com — الهاتف: +000 123 456</p>
-    <div class="contact-card card">
-      <form id="contactForm">
-        <input type="text" id="cname" placeholder="الاسم الكامل" required>
-        <input type="email" id="cemail" placeholder="البريد الإلكتروني" required>
-        <textarea id="cmsg" rows="4" placeholder="رسالتك" required></textarea>
-        <button type="submit" class="btn">إرسال</button>
-      </form>
-    </div>
+    <p>📧 البريد الإلكتروني: info@ads-company.com</p>
+    <p>📞 الهاتف: +123456789</p>
   </section>
-</main>
 
-<footer class="footer glass">
-  <div>© 2025 شركة الإعلانات</div>
-  <div>العنوان: شارع المثال، المدينة</div>
-</footer>
+  <!-- ذيل الصفحة -->
+  <footer>
+    <p>© 2025 جميع الحقوق محفوظة - شركة الإعلانات</p>
+  </footer>
 
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

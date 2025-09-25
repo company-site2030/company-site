@@ -1,44 +1,44 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>تسجيل</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تسجيل حساب جديد</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="topbar">
-  <div class="logo">شركة الإعلانات</div>
-  <div class="menu-toggle" id="menuToggle2">☰</div>
-  <nav class="nav-links" id="navLinks2">
-    <a href="index.html">الرئيسية</a>
-    <a href="login.html">دخول</a>
-  </nav>
-</header>
+  <!-- رأس الموقع -->
+  <header>
+    <div class="logo">شركة الإعلانات</div>
+    <div class="menu-toggle">☰</div>
+    <nav class="nav-links">
+      <a href="index.html">الرئيسية</a>
+      <a href="login.html">دخول</a>
+    </nav>
+  </header>
 
-<main class="main-content">
-  <section class="section glass form-card">
-    <h2>تسجيل حساب جديد</h2>
-    <form id="registerForm">
-      <input id="rname" type="text" placeholder="الاسم الكامل" required>
-      <input id="remail" type="email" placeholder="البريد الإلكتروني" required>
-      <input id="rphone" type="tel" placeholder="رقم الهاتف" required>
-      <input id="rpassword" type="password" placeholder="كلمة المرور (6 أحرف على الأقل)" required>
-      <button type="submit" class="btn">تسجيل</button>
-    </form>
-    <p class="muted">عند التسجيل سيتم إنشاء حساب وربطه بقاعدة البيانات الآمنة Firebase.</p>
-  </section>
-</main>
+  <!-- نموذج التسجيل -->
+  <main class="main-content">
+    <section class="form-section glass-section">
+      <h2>تسجيل حساب جديد</h2>
+      <form id="register-form">
+        <input type="text" id="fullName" placeholder="الاسم الكامل" required>
+        <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+        <input type="tel" id="phone" placeholder="رقم الهاتف" required>
+        <input type="password" id="password" placeholder="كلمة المرور" required>
+        <button type="submit">تسجيل</button>
+      </form>
+      <p>لديك حساب بالفعل؟ <a href="login.html">تسجيل الدخول</a></p>
+    </section>
+  </main>
 
-<footer class="footer glass">
-  © 2025 شركة الإعلانات
-</footer>
+  <footer>
+    <p>© 2025 جميع الحقوق محفوظة - شركة الإعلانات</p>
+  </footer>
 
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-<script>
-  // config متاح في script.js
-</script>
-<script src="script.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
