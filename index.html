@@ -11,17 +11,55 @@
       background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
       color: white;
       line-height: 1.6;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: rgba(0,0,0,0.4);
+      position: sticky;
+      top: 0;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+    }
+    nav button {
+      margin-left: 10px;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(45deg, #00f5d4, #00bbf9);
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .hero {
       text-align: center;
+      padding: 60px 20px;
+    }
+    .hero h2 {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+    .section {
+      padding: 40px 20px;
+      text-align: center;
+      background: rgba(255,255,255,0.05);
+      margin: 20px auto;
+      border-radius: 12px;
+      max-width: 900px;
     }
     .container {
       max-width: 500px;
-      margin: 40px auto;
+      margin: 20px auto;
       padding: 20px;
       background: rgba(255,255,255,0.1);
       border-radius: 15px;
       backdrop-filter: blur(10px);
     }
-    input {
+    input, button {
       display: block;
       width: 100%;
       margin: 10px 0;
@@ -30,26 +68,44 @@
       border-radius: 10px;
     }
     button {
-      padding: 12px;
-      margin-top: 10px;
-      width: 100%;
-      border: none;
-      border-radius: 10px;
       background: linear-gradient(45deg, #00f5d4, #00bbf9);
       color: black;
       font-weight: bold;
       cursor: pointer;
-      transition: 0.3s;
     }
     button:hover {
       transform: scale(1.05);
     }
-    #dashboard { display: none; }
+    #dashboard, #register, #login { display: none; }
     .hidden { display: none; }
   </style>
 </head>
 <body>
-  <h1>🚀 شركة الإعلانات</h1>
+  <header>
+    <h1>🚀 شركة الإعلانات</h1>
+    <nav>
+      <button onclick="showRegister()">تسجيل</button>
+      <button onclick="showLogin()">دخول</button>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <h2>مرحبًا بك في شركتنا</h2>
+    <p>نحن نقدم حلول إعلانية مبتكرة تساعدك على الوصول لعملائك بسرعة وفعالية.</p>
+  </div>
+
+  <div class="section">
+    <h3>عن الشركة</h3>
+    <p>شركة الإعلانات هي المنصة المثالية لتسويق منتجاتك وخدماتك. نقدم استراتيجيات تسويقية حديثة تضمن نتائج فعالة بأقل التكاليف.</p>
+  </div>
+
+  <div class="section">
+    <h3>خدماتنا</h3>
+    <p>📢 الحملات الإعلانية الرقمية<br>
+       🎯 استهداف دقيق للعملاء<br>
+       📊 تقارير وتحليلات لحظية<br>
+       🌍 وصول عالمي</p>
+  </div>
 
   <!-- تسجيل -->
   <div class="container" id="register">
@@ -59,16 +115,14 @@
     <input type="text" id="regPhone" placeholder="رقم الهاتف" required>
     <input type="password" id="regPassword" placeholder="كلمة المرور" required>
     <button onclick="register()">تسجيل</button>
-    <p>عندك حساب؟ <a href="#" onclick="showLogin()">تسجيل دخول</a></p>
   </div>
 
   <!-- دخول -->
-  <div class="container hidden" id="login">
+  <div class="container" id="login">
     <h2>تسجيل دخول</h2>
     <input type="email" id="loginEmail" placeholder="البريد الإلكتروني" required>
     <input type="password" id="loginPassword" placeholder="كلمة المرور" required>
     <button onclick="login()">دخول</button>
-    <p>ما عندك حساب؟ <a href="#" onclick="showRegister()">تسجيل جديد</a></p>
   </div>
 
   <!-- لوحة التحكم -->
@@ -93,7 +147,6 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
   <script>
-    // إعداد Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyCFYr3mTYs3BFvtnIcuFEjkSfJV3kPrzXk",
       authDomain: "ads-company-2e012.firebaseapp.com",
@@ -108,17 +161,17 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    // عرض تسجيل/دخول
     function showLogin() {
-      document.getElementById("register").classList.add("hidden");
-      document.getElementById("login").classList.remove("hidden");
+      document.getElementById("register").style.display = "none";
+      document.getElementById("login").style.display = "block";
+      document.getElementById("dashboard").style.display = "none";
     }
     function showRegister() {
-      document.getElementById("login").classList.add("hidden");
-      document.getElementById("register").classList.remove("hidden");
+      document.getElementById("login").style.display = "none";
+      document.getElementById("register").style.display = "block";
+      document.getElementById("dashboard").style.display = "none";
     }
 
-    // تسجيل حساب جديد
     async function register() {
       const name = document.getElementById("regName").value;
       const email = document.getElementById("regEmail").value;
@@ -141,7 +194,6 @@
       }
     }
 
-    // تسجيل دخول
     async function login() {
       const email = document.getElementById("loginEmail").value;
       const password = document.getElementById("loginPassword").value;
@@ -155,7 +207,6 @@
       }
     }
 
-    // تحميل الحساب
     async function loadDashboard(user) {
       const doc = await db.collection("users").doc(user.uid).get();
       if (doc.exists) {
@@ -168,7 +219,6 @@
       }
     }
 
-    // طلب سحب
     async function requestWithdraw() {
       const address = document.getElementById("withdrawAddress").value;
       const user = auth.currentUser;
@@ -181,14 +231,11 @@
       alert("تم إرسال طلب السحب. سنتواصل معك قريبا.");
     }
 
-    // خروج
     function logout() {
       auth.signOut();
       document.getElementById("dashboard").style.display = "none";
-      document.getElementById("login").style.display = "block";
     }
 
-    // تحقق من تسجيل الدخول
     auth.onAuthStateChanged(user => {
       if (user) {
         loadDashboard(user);
