@@ -131,7 +131,7 @@
   </header>
 
   <main>
-    <h2>مرحبا بك 👋</h2>
+    <h2 id="welcome">مرحبا بك 👋</h2>
     <p class="balance">الرصيد الحالي: <span id="balance">0</span> $</p>
     <button onclick="deposit()">إيداع</button>
     <button onclick="withdraw()">سحب</button>
@@ -145,7 +145,8 @@
     // تحقق من المستخدم الحالي
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        document.querySelector("h2").textContent = "مرحبا، " + (user.displayName || user.email);
+        const name = user.displayName || user.email || "العميل";
+        document.getElementById("welcome").textContent = "مرحبا، " + name;
         document.getElementById("balance").textContent = "0"; // يبدأ الرصيد صفر
       } else {
         window.location.href = "login.html";
