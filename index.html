@@ -92,9 +92,26 @@
   </header>
 
   <!-- الصفحة الرئيسية -->
-  <div id="home" class="hero">
-    <h2>مرحباً بك في شركتنا</h2>
-    <p>نحن شركة متخصصة في مجال الإعلانات الرقمية، نقدم حلولاً مبتكرة لتسويق أعمالك وزيادة وصولك إلى العملاء.</p>
+  <div id="home">
+    <div class="hero">
+      <h2>مرحباً بك في شركتنا</h2>
+      <p>نحن شركة متخصصة في مجال الإعلانات الرقمية، نقدم حلولاً مبتكرة لتسويق أعمالك وزيادة وصولك إلى العملاء.</p>
+    </div>
+
+    <div class="section">
+      <h3>📅 تاريخ الشركة</h3>
+      <p>تأسست شركتنا عام 2015، ومنذ ذلك الحين ونحن نعمل على تطوير استراتيجيات تسويقية متقدمة تناسب السوق المتغير.</p>
+    </div>
+
+    <div class="section">
+      <h3>🚀 نجاحاتنا</h3>
+      <p>خدمنا أكثر من 500 عميل حول العالم، وساهمنا في رفع مبيعاتهم بنسبة تجاوزت 150% عبر الحملات الإعلانية الذكية.</p>
+    </div>
+
+    <div class="section">
+      <h3>🏆 رؤيتنا</h3>
+      <p>أن نكون الشركة الرائدة في مجال الإعلانات الرقمية، ونساعد شركاءنا على تحقيق النجاح والنمو المستدام.</p>
+    </div>
   </div>
 
   <!-- تسجيل -->
@@ -147,9 +164,9 @@
   </div>
 
   <!-- Firebase + JS -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 
   <script>
     // إعداد Firebase
@@ -162,14 +179,14 @@
       appId: "1:706203585878:web:98c58764c1c7f95f1e5af7",
       measurementId: "G-BKSKHM3Z2S"
     };
-    const app = firebase.initializeApp(firebaseConfig);
+    firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
 
     // تبديل الأقسام
     function showSection(id) {
-      document.querySelectorAll("div").forEach(div => {
-        if (div.id && div.id !== "dashboard") div.classList.add("hidden");
+      ["home","register","login","dashboard"].forEach(sec=>{
+        document.getElementById(sec).classList.add("hidden");
       });
       document.getElementById(id).classList.remove("hidden");
     }
@@ -184,9 +201,7 @@
       try {
         const userCredential = await auth.createUserWithEmailAndPassword(email, password);
         const user = userCredential.user;
-        await db.collection("users").doc(user.uid).set({
-          name, email, phone, balance: 0
-        });
+        await db.collection("users").doc(user.uid).set({ name, email, phone, balance: 0 });
         alert("تم التسجيل بنجاح!");
         loadDashboard(user);
       } catch (error) {
@@ -198,7 +213,6 @@
     async function login() {
       const email = document.getElementById("loginEmail").value;
       const password = document.getElementById("loginPassword").value;
-
       try {
         const userCredential = await auth.signInWithEmailAndPassword(email, password);
         loadDashboard(userCredential.user);
@@ -234,7 +248,6 @@
       const address = document.getElementById("withdrawAddress").value;
       const user = auth.currentUser;
       if (!address) return alert("يرجى إدخال عنوان محفظة.");
-
       await db.collection("withdrawRequests").add({
         userId: user.uid,
         address,
