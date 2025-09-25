@@ -3,83 +3,197 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>لوحة التحكم - حسابي</title>
-  <link rel="stylesheet" href="style.css">
+  <title>لوحة العميل - شركة الإعلانات</title>
   <style>
-    body { font-family:"Cairo", sans-serif; background: linear-gradient(135deg, #74ABE2, #5563DE); margin:0; padding:0; display:flex; justify-content:center; align-items:center; min-height:100vh; }
-    .dashboard { background:#fff; padding:30px; border-radius:15px; width:100%; max-width:500px; box-shadow:0 10px 25px rgba(0,0,0,0.15); text-align:center; }
-    h2 { margin-bottom:20px; }
-    .info { text-align:right; margin:15px 0; padding:10px; border-bottom:1px solid #eee; }
-    .balance { font-size:22px; font-weight:bold; margin:20px 0; color:#333; }
-    .btn { display:block; width:100%; padding:12px; margin:10px 0; border:none; border-radius:8px; font-size:16px; cursor:pointer; }
-    .deposit { background:#28a745; color:#fff; }
-    .deposit:hover { background:#218838; }
-    .withdraw { background:#dc3545; color:#fff; }
-    .withdraw:hover { background:#c82333; }
-    .logout { background:#6c757d; color:#fff; }
-    .logout:hover { background:#5a6268; }
+    body {
+      margin: 0;
+      font-family: 'Tahoma', sans-serif;
+      background: linear-gradient(135deg, rgba(0,0,0,0.85), rgba(50,50,50,0.85)),
+                  url('https://source.unsplash.com/1600x900/?business,office');
+      background-size: cover;
+      background-attachment: fixed;
+      color: #fff;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: rgba(0,0,0,0.6);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 26px;
+      cursor: pointer;
+    }
+
+    main {
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 30px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    .balance {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 10px;
+      background: #00c3ff;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #008bbf;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        flex-direction: column;
+        background: rgba(0,0,0,0.9);
+        height: 100%;
+        width: 250px;
+        padding-top: 60px;
+        transition: right 0.3s ease;
+      }
+      .nav-links.active {
+        right: 0;
+      }
+      .menu-toggle {
+        display: block;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="dashboard">
+  <header>
+    <h1>شركة الإعلانات</h1>
+    <nav>
+      <span class="menu-toggle">☰</span>
+      <ul class="nav-links">
+        <li><a href="index.html">الرئيسية</a></li>
+        <li><a href="#" onclick="logout()">تسجيل الخروج</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
     <h2>مرحبا بك 👋</h2>
-    <div class="info"><strong>الاسم:</strong> <span id="userName"></span></div>
-    <div class="info"><strong>البريد الإلكتروني:</strong> <span id="userEmail"></span></div>
-    <div class="info"><strong>رقم الهاتف:</strong> <span id="userPhone"></span></div>
-    <div class="balance">الرصيد الحالي: <span id="balance">0</span> $</div>
-    <button class="btn deposit" onclick="deposit()">إيداع</button>
-    <button class="btn withdraw" onclick="withdraw()">سحب</button>
-    <button class="btn logout" onclick="logout()">تسجيل الخروج</button>
-  </div>
+    <p class="balance">الرصيد الحالي: <span id="balance">0</span> $</p>
+    <button onclick="deposit()">إيداع</button>
+    <button onclick="withdraw()">سحب</button>
+  </main>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyCFYr3mTYs3BFvtnIcuFEjkSfJV3kPrzXk",
-      authDomain: "ads-company-2e012.firebaseapp.com",
-      projectId: "ads-company-2e012",
-      storageBucket: "ads-company-2e012.appspot.com",
-      messagingSenderId: "706203585878",
-      appId: "1:706203585878:web:98c58764c1c7f95f1e5af7",
-      measurementId: "G-BKSKHM3Z2S"
-    };
+    const auth = getAuth();
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    const userName = document.getElementById("userName");
-    const userEmail = document.getElementById("userEmail");
-    const userPhone = document.getElementById("userPhone");
-    const balance = document.getElementById("balance");
-
-    // ✅ جلب بيانات المستخدم بعد تسجيل الدخول
+    // تحقق من المستخدم الحالي
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        userName.textContent = user.displayName || "مستخدم";
-        userEmail.textContent = user.email;
-        userPhone.textContent = user.phoneNumber || "—";
-        balance.textContent = "100"; // مؤقت: خليت الرصيد 100$ كاختبار
+        document.querySelector("h2").textContent = "مرحبا، " + (user.displayName || user.email);
+        document.getElementById("balance").textContent = "0"; // يبدأ الرصيد صفر
       } else {
         window.location.href = "login.html";
       }
     });
 
-    // أزرار الإيداع والسحب (مؤقتة)
-    window.deposit = () => {
-      alert("لإيداع الأموال، الرجاء التحويل إلى محفظة USDT الخاصة بالشركة.");
-    };
-
-    window.withdraw = () => {
-      alert("لطلب سحب، الرجاء إدخال عنوان محفظتك USDT وسنحول لك المبلغ.");
-    };
-
+    // تسجيل الخروج
     window.logout = () => {
       signOut(auth).then(() => {
         window.location.href = "login.html";
       });
     };
+
+    // إيداع
+    window.deposit = () => {
+      const addr = "0x7F8125C197B845E1F0682A9846B94A11cA9d9743";
+      const ok = confirm("لإيداع USDT (ERC20) الرجاء تحويل المبلغ إلى:\n\n" + addr + "\n\nهل تريد نسخ العنوان الآن إلى الحافظة؟");
+      if (ok && navigator.clipboard) {
+        navigator.clipboard.writeText(addr).then(() => {
+          alert("تم نسخ عنوان المحفظة ✅");
+        }).catch(() => {
+          alert("فشل النسخ، انسخ العنوان يدويًا:\n" + addr);
+        });
+      }
+    };
+
+    // سحب
+    window.withdraw = () => {
+      const address = prompt("أدخل عنوان محفظتك (USDT ERC20):");
+      if (!address) return;
+
+      const amountStr = prompt("أدخل المبلغ المطلوب سحبه (USDT):");
+      const amount = parseFloat(amountStr);
+
+      if (!amountStr || isNaN(amount) || amount <= 0) {
+        alert("المبلغ غير صالح ❌");
+        return;
+      }
+
+      alert("✅ تم إرسال طلب السحب:\nالعنوان: " + address + "\nالمبلغ: " + amount + " USDT\nسيتم المعالجة قريبًا.");
+    };
+
+    // القائمة للجوال
+    const toggle = document.querySelector(".menu-toggle");
+    const navLinks = document.querySelector(".nav-links");
+    toggle.addEventListener("click", () => {
+      navLinks.classList.toggle("active");
+    });
   </script>
 </body>
 </html>
