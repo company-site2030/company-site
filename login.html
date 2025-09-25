@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>تسجيل الدخول - شركة الإعلانات</title>
+  <title>تسجيل الدخول</title>
   <style>
     body {
       margin: 0;
       font-family: 'Tahoma', sans-serif;
-      background: linear-gradient(135deg, rgba(0,0,0,0.85), rgba(50,50,50,0.85)),
-                  url('https://source.unsplash.com/1600x900/?technology,network');
+      background: linear-gradient(135deg, rgba(0,0,0,0.9), rgba(0,70,70,0.9)),
+                  url('https://source.unsplash.com/1600x900/?technology,digital');
       background-size: cover;
       background-attachment: fixed;
       color: #fff;
@@ -17,12 +17,12 @@
 
     main {
       max-width: 400px;
-      margin: 50px auto;
+      margin: 60px auto;
       padding: 25px;
       border-radius: 15px;
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 25px rgba(0,0,0,0.6);
       text-align: center;
     }
 
@@ -32,15 +32,12 @@
       width: 100%;
       padding: 12px;
       margin-bottom: 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+      border: none;
+      border-radius: 10px;
       font-size: 15px;
-      box-sizing: border-box;
-      background: #fff;
+      background: rgba(255,255,255,0.9);
       color: #000;
     }
-
-    ::placeholder { color: #555; }
 
     button {
       width: 100%;
@@ -52,7 +49,7 @@
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: 0.3s;
     }
     button:hover { background: #008bbf; }
 
@@ -72,10 +69,11 @@
   </main>
 
   <script type="module">
-    import { getAuth, signInWithEmailAndPassword } 
+    import { getAuth, signInWithEmailAndPassword }
       from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { app } from "./firebase.js";
 
-    const auth = getAuth();
+    const auth = getAuth(app);
 
     window.login = () => {
       const email = document.getElementById("email").value;
@@ -85,9 +83,7 @@
         .then(() => {
           window.location.href = "dashboard.html";
         })
-        .catch((error) => {
-          alert("خطأ: " + error.message);
-        });
+        .catch(err => alert("❌ خطأ: " + err.message));
     };
   </script>
 </body>
