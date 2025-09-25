@@ -1,82 +1,58 @@
-// Robust menu + small Firebase hooks (menu-focused)
-// ضع هذا في ملف script.js (غير المحتوى القديم بالكامل)
+// Firebase إعداد
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
 
-(function(){
-  // ---- MENU TOGGLE (robust, works even لو العناصر بأسماء مختلفة) ----
-  document.addEventListener('DOMContentLoaded', () => {
-    // หา جميع عناصر القائمة (menu-toggle) بغض النظر عن id أو class
-    const toggles = Array.from(document.querySelectorAll('.menu-toggle, [id="menu-toggle"], [data-role="menu-toggle"]'));
+const app = firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-    if (toggles.length === 0) {
-      console.warn('menu-toggle: لم أجد أي عنصر .menu-toggle أو #menu-toggle. تأكد من وجود زر ☰ في الهيدر.');
+// تسجيل حساب جديد
+const registerForm = document.getElementById("registerForm");
+if (registerForm) {
+  registerForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const fullname = document.getElementById("fullname").value;
+    const email = document.getElementById("email").value;
+    const phone = document.getElementById("phone").value;
+    const password = document.getElementById("password").value;
+
+    try {
+      const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+      const user = userCredential.user;
+      await db.collection("users").doc(user.uid).set({
+        fullname,
+        email,
+        phone,
+        balance: 0,
+        transactions: []
+      });
+      alert("تم إنشاء الحساب بنجاح ✅");
+      window.location.href = "login.html";
+    } catch (error) {
+      alert("خطأ: " + error.message);
     }
-
-    toggles.forEach(toggle => {
-      // حاول إيجاد العنصر nav-links في نفس header أو nav
-      const container = toggle.closest('header') || toggle.closest('nav') || document;
-      let navLinks = container.querySelector('.nav-links') || document.querySelector('.nav-links');
-
-      if (!navLinks) {
-        console.warn('menu-toggle: لم أجد .nav-links مرتبطة بهذا الزر. تحقق من HTML (ضع .nav-links داخل header أو nav).', toggle);
-        return;
-      }
-
-      // Accessibility attributes
-      toggle.setAttribute('role', 'button');
-      toggle.setAttribute('tabindex', '0');
-      toggle.setAttribute('aria-controls', navLinks.id || 'navlinks');
-      toggle.setAttribute('aria-expanded', navLinks.classList.contains('active') ? 'true' : 'false');
-
-      // Toggle function
-      function toggleMenu() {
-        const isActive = navLinks.classList.toggle('active');
-        toggle.setAttribute('aria-expanded', isActive ? 'true' : 'false');
-        // منع السحب/تمرير الخلفية عند فتح القائمة
-        document.body.style.overflow = isActive ? 'hidden' : '';
-      }
-
-      // Click + keyboard
-      toggle.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(); });
-      toggle.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); toggleMenu(); }
-      });
-
-      // إغلاق القائمة عند الضغط على أي رابط داخلها
-      navLinks.querySelectorAll('a').forEach(a => {
-        a.addEventListener('click', () => {
-          navLinks.classList.remove('active');
-          toggle.setAttribute('aria-expanded', 'false');
-          document.body.style.overflow = '';
-        });
-      });
-
-      // إغلاق القائمة عند الضغط خارجها
-      document.addEventListener('click', (ev) => {
-        if (!navLinks.classList.contains('active')) return;
-        // لو النقر خارج الحاوية، اقفل
-        if (!container.contains(ev.target)) {
-          navLinks.classList.remove('active');
-          toggle.setAttribute('aria-expanded', 'false');
-          document.body.style.overflow = '';
-        }
-      });
-
-      // منع تداخل اللمس (touch) — بعض الأجهزة تحتاج هذا
-      document.addEventListener('touchstart', (ev) => {
-        if (!navLinks.classList.contains('active')) return;
-        if (!container.contains(ev.target)) {
-          navLinks.classList.remove('active');
-          toggle.setAttribute('aria-expanded', 'false');
-          document.body.style.overflow = '';
-        }
-      }, {passive: true});
-    });
   });
+}
 
-  // ---- small debug helper (يمكنك حذفها لاحقاً) ----
-  window.__menuDebug = () => {
-    console.log('toggles:', document.querySelectorAll('.menu-toggle, #menu-toggle'));
-    console.log('nav-links:', document.querySelectorAll('.nav-links'));
-  };
+// تسجيل الدخول
+const loginForm = document.getElementById("loginForm");
+if (loginForm) {
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
 
-})();
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+      window.location.href = "dashboard.html";
+    } catch (error) {
+      alert("خطأ: " + error.message);
+    }
+  });
+}
