@@ -11,94 +11,30 @@
       background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
       color: white;
       line-height: 1.6;
-    }
-
-    header {
-      width: 90%;
-      margin: 20px auto;
-      padding: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      backdrop-filter: blur(10px);
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      box-shadow: 0 4px 30px rgba(0,0,0,0.2);
-    }
-
-    nav a {
-      margin: 0 15px;
-      text-decoration: none;
-      color: #fff;
-      transition: 0.3s;
-    }
-    nav a:hover {
-      color: #00f5d4;
-    }
-
-    .hero {
-      text-align: center;
-      margin: 50px auto;
-      padding: 40px;
-      max-width: 700px;
-      backdrop-filter: blur(15px);
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 25px;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.3);
-    }
-
-    .hero h1 {
-      font-size: 3rem;
-    }
-
-    section {
-      padding: 50px 20px;
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-
-    .card {
-      padding: 20px;
-      border-radius: 20px;
-      backdrop-filter: blur(10px);
-      background: rgba(255, 255, 255, 0.1);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
       text-align: center;
     }
-
-    .works img {
-      width: 100%;
-      border-radius: 15px;
-      margin-bottom: 15px;
-      transition: 0.3s;
-    }
-    .works img:hover {
-      transform: scale(1.05);
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
+    .container {
       max-width: 500px;
-      margin: auto;
+      margin: 40px auto;
+      padding: 20px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
     }
-    input, textarea {
+    input {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
       padding: 12px;
-      border-radius: 10px;
       border: none;
-      outline: none;
+      border-radius: 10px;
     }
     button {
       padding: 12px;
+      margin-top: 10px;
+      width: 100%;
       border: none;
-      border-radius: 15px;
+      border-radius: 10px;
       background: linear-gradient(45deg, #00f5d4, #00bbf9);
       color: black;
       font-weight: bold;
@@ -106,69 +42,158 @@
       transition: 0.3s;
     }
     button:hover {
-      transform: scale(1.1);
+      transform: scale(1.05);
     }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: rgba(255,255,255,0.1);
-      margin-top: 40px;
-      border-top: 1px solid rgba(255,255,255,0.2);
-    }
+    #dashboard { display: none; }
+    .hidden { display: none; }
   </style>
 </head>
 <body>
-  <header>
-    <h2>🚀 شركتنا</h2>
-    <nav>
-      <a href="#services">خدماتنا</a>
-      <a href="#works">أعمالنا</a>
-      <a href="#contact">تواصل</a>
-    </nav>
-  </header>
+  <h1>🚀 شركة الإعلانات</h1>
 
-  <section class="hero">
-    <h1>نصمم إعلانات تبقى بالذاكرة ✨</h1>
-    <p>حلول تسويق مبتكرة، إعلانات إبداعية، ونتائج مضمونة.</p>
-    <button onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
-      تواصل معنا
-    </button>
-  </section>
+  <!-- تسجيل -->
+  <div class="container" id="register">
+    <h2>تسجيل حساب جديد</h2>
+    <input type="text" id="regName" placeholder="الاسم الكامل" required>
+    <input type="email" id="regEmail" placeholder="البريد الإلكتروني" required>
+    <input type="text" id="regPhone" placeholder="رقم الهاتف" required>
+    <input type="password" id="regPassword" placeholder="كلمة المرور" required>
+    <button onclick="register()">تسجيل</button>
+    <p>عندك حساب؟ <a href="#" onclick="showLogin()">تسجيل دخول</a></p>
+  </div>
 
-  <!-- قسم الخدمات -->
-  <section id="services">
-    <h2>خدماتنا</h2>
-    <div class="cards">
-      <div class="card">📢 إعلانات رقمية</div>
-      <div class="card">🎨 تصميم جرافيك</div>
-      <div class="card">📱 إدارة السوشيال ميديا</div>
-    </div>
-  </section>
+  <!-- دخول -->
+  <div class="container hidden" id="login">
+    <h2>تسجيل دخول</h2>
+    <input type="email" id="loginEmail" placeholder="البريد الإلكتروني" required>
+    <input type="password" id="loginPassword" placeholder="كلمة المرور" required>
+    <button onclick="login()">دخول</button>
+    <p>ما عندك حساب؟ <a href="#" onclick="showRegister()">تسجيل جديد</a></p>
+  </div>
 
-  <!-- قسم الأعمال -->
-  <section id="works" class="works">
-    <h2>أعمالنا</h2>
-    <div class="cards">
-      <img src="https://source.unsplash.com/400x300/?advertising" alt="عمل 1">
-      <img src="https://source.unsplash.com/400x300/?marketing" alt="عمل 2">
-      <img src="https://source.unsplash.com/400x300/?design" alt="عمل 3">
-    </div>
-  </section>
+  <!-- لوحة التحكم -->
+  <div class="container" id="dashboard">
+    <h2>مرحبا <span id="userName"></span> 👋</h2>
+    <p>رصيدك الحالي: <span id="balance">0</span> USDT</p>
 
-  <!-- قسم التواصل -->
-  <section id="contact">
-    <h2>تواصل معنا</h2>
-    <form action="https://formspree.io/f/xdkwkgbj" method="POST">
-      <input type="text" name="name" placeholder="اسمك" required>
-      <input type="email" name="email" placeholder="بريدك الإلكتروني" required>
-      <textarea name="message" rows="5" placeholder="رسالتك"></textarea>
-      <button type="submit">إرسال</button>
-    </form>
-  </section>
+    <h3>💰 إيداع</h3>
+    <p>انسخ هذا العنوان وحول USDT (ERC20):</p>
+    <p><b>0x7F8125C197B845E1F0682A9846B94A11cA9d9743</b></p>
 
-  <footer>
-    <p>© 2025 جميع الحقوق محفوظة - شركتنا</p>
-  </footer>
+    <h3>🏧 سحب</h3>
+    <input type="text" id="withdrawAddress" placeholder="أدخل عنوان USDT للسحب">
+    <button onclick="requestWithdraw()">طلب سحب</button>
+
+    <button onclick="logout()">تسجيل خروج</button>
+  </div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+
+  <script>
+    // إعداد Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyCFYr3mTYs3BFvtnIcuFEjkSfJV3kPrzXk",
+      authDomain: "ads-company-2e012.firebaseapp.com",
+      projectId: "ads-company-2e012",
+      storageBucket: "ads-company-2e012.firebasestorage.app",
+      messagingSenderId: "706203585878",
+      appId: "1:706203585878:web:98c58764c1c7f95f1e5af7",
+      measurementId: "G-BKSKHM3Z2S"
+    };
+
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // عرض تسجيل/دخول
+    function showLogin() {
+      document.getElementById("register").classList.add("hidden");
+      document.getElementById("login").classList.remove("hidden");
+    }
+    function showRegister() {
+      document.getElementById("login").classList.add("hidden");
+      document.getElementById("register").classList.remove("hidden");
+    }
+
+    // تسجيل حساب جديد
+    async function register() {
+      const name = document.getElementById("regName").value;
+      const email = document.getElementById("regEmail").value;
+      const phone = document.getElementById("regPhone").value;
+      const password = document.getElementById("regPassword").value;
+
+      try {
+        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        const user = userCredential.user;
+        await db.collection("users").doc(user.uid).set({
+          name: name,
+          email: email,
+          phone: phone,
+          balance: 0
+        });
+        alert("تم التسجيل بنجاح!");
+        showLogin();
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+
+    // تسجيل دخول
+    async function login() {
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+
+      try {
+        const userCredential = await auth.signInWithEmailAndPassword(email, password);
+        const user = userCredential.user;
+        loadDashboard(user);
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+
+    // تحميل الحساب
+    async function loadDashboard(user) {
+      const doc = await db.collection("users").doc(user.uid).get();
+      if (doc.exists) {
+        const data = doc.data();
+        document.getElementById("userName").innerText = data.name;
+        document.getElementById("balance").innerText = data.balance;
+        document.getElementById("register").style.display = "none";
+        document.getElementById("login").style.display = "none";
+        document.getElementById("dashboard").style.display = "block";
+      }
+    }
+
+    // طلب سحب
+    async function requestWithdraw() {
+      const address = document.getElementById("withdrawAddress").value;
+      const user = auth.currentUser;
+      if (!address) return alert("أدخل عنوان USDT");
+      await db.collection("withdrawRequests").add({
+        userId: user.uid,
+        address: address,
+        date: new Date()
+      });
+      alert("تم إرسال طلب السحب. سنتواصل معك قريبا.");
+    }
+
+    // خروج
+    function logout() {
+      auth.signOut();
+      document.getElementById("dashboard").style.display = "none";
+      document.getElementById("login").style.display = "block";
+    }
+
+    // تحقق من تسجيل الدخول
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        loadDashboard(user);
+      }
+    });
+  </script>
 </body>
 </html>
