@@ -1,39 +1,40 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>دخول</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>دخول</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <div class="logo">شركة الإعلانات</div>
-    <div class="menu-toggle">☰</div>
-    <nav class="nav-links">
-      <a href="index.html">الرئيسية</a>
-      <a href="about.html">عن الشركة</a>
-      <a href="services.html">الخدمات</a>
-      <a href="works.html">أعمالنا</a>
-      <a href="clients.html">آراء العملاء</a>
-      <a href="contact.html">اتصل بنا</a>
-      <a href="register.html">تسجيل</a>
-      <a href="login.html">دخول</a>
-    </nav>
-  </header>
+<header class="topbar">
+  <div class="logo">شركة الإعلانات</div>
+  <div class="menu-toggle" id="menuToggle3">☰</div>
+  <nav class="nav-links" id="navLinks3">
+    <a href="index.html">الرئيسية</a>
+    <a href="register.html">تسجيل</a>
+  </nav>
+</header>
 
-  <section class="form-section">
+<main class="main-content">
+  <section class="section glass form-card">
     <h2>تسجيل الدخول</h2>
-    <form>
-      <input type="email" placeholder="البريد الإلكتروني" required>
-      <input type="password" placeholder="كلمة المرور" required>
-      <button type="submit">دخول</button>
+    <form id="loginForm">
+      <input id="lemail" type="email" placeholder="البريد الإلكتروني" required>
+      <input id="lpassword" type="password" placeholder="كلمة المرور" required>
+      <button type="submit" class="btn">دخول</button>
     </form>
+    <p class="muted">نسيت كلمة المرور؟ <a href="#">إضغط هنا</a></p>
   </section>
+</main>
 
-  <footer>
-    <p>© 2025 جميع الحقوق محفوظة - شركة الإعلانات</p>
-  </footer>
-  <script src="script.js"></script>
+<footer class="footer glass">© 2025 شركة الإعلانات</footer>
+
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+<script>
+  // config متاح في script.js
+</script>
+<script src="script.js"></script>
 </body>
 </html>
