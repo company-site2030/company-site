@@ -1,6 +1,10 @@
-// ==========================
-// إعداد Firebase
-// ==========================
+// ✅ Firebase إعداد
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } 
+  from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc } 
+  from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyCFYr3mTYs3BFvtnIcuFEjkSfJV3kPrzXk",
   authDomain: "ads-company-2e012.firebaseapp.com",
@@ -11,100 +15,97 @@ const firebaseConfig = {
   measurementId: "G-BKSKHM3Z2S"
 };
 
-// تفعيل Firebase
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-// ==========================
-// تسجيل مستخدم جديد
-// ==========================
+// ✅ القائمة (٣ شخطات للجوال)
+const menuToggle = document.getElementById("menu-toggle");
+const navLinks = document.getElementById("nav-links");
+
+if (menuToggle) {
+  menuToggle.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+  });
+}
+
+// ✅ تسجيل مستخدم جديد
 const registerForm = document.getElementById("register-form");
 if (registerForm) {
   registerForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const name = document.getElementById("name").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const email = document.getElementById("email").value.trim();
+    const name = document.getElementById("name").value;
+    const phone = document.getElementById("phone").value;
+    const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
     try {
-      const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      await db.collection("users").doc(user.uid).set({
+      // حفظ بيانات إضافية في Firestore
+      await setDoc(doc(db, "users", user.uid), {
         name,
         phone,
         email,
         balance: 0
       });
 
-      alert("✅ تم التسجيل بنجاح");
+      alert("تم التسجيل بنجاح ✅");
       window.location.href = "login.html";
     } catch (error) {
-      alert("❌ خطأ: " + error.message);
+      alert("خطأ: " + error.message);
     }
   });
 }
 
-// ==========================
-// تسجيل الدخول
-// ==========================
+// ✅ تسجيل الدخول
 const loginForm = document.getElementById("login-form");
 if (loginForm) {
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const email = document.getElementById("loginEmail").value.trim();
-    const password = document.getElementById("loginPassword").value;
+    const email = document.getElementById("login-email").value;
+    const password = document.getElementById("login-password").value;
 
     try {
-      await auth.signInWithEmailAndPassword(email, password);
-      window.location.href = "dashboard.html";
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      window.location.href = "dashboard.html"; // بعد الدخول يروح للوحة التحكم
     } catch (error) {
-      alert("❌ خطأ: " + error.message);
+      alert("خطأ: " + error.message);
     }
   });
 }
 
-// ==========================
-// تحميل بيانات العميل في لوحة التحكم
-// ==========================
-if (window.location.pathname.includes("dashboard.html")) {
-  auth.onAuthStateChanged(async (user) => {
-    if (user) {
-      const doc = await db.collection("users").doc(user.uid).get();
-      if (doc.exists) {
-        const data = doc.data();
-        document.getElementById("clientName").textContent = data.name;
-        document.getElementById("clientEmail").textContent = data.email;
-        document.getElementById("clientPhone").textContent = data.phone;
-        document.getElementById("clientBalance").textContent = data.balance + " $";
-      }
-    } else {
-      window.location.href = "login.html";
+// ✅ عرض بيانات المستخدم في لوحة التحكم
+async function loadDashboard() {
+  const user = auth.currentUser;
+  if (user) {
+    const docRef = doc(db, "users", user.uid);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      document.getElementById("user-name").textContent = data.name;
+      document.getElementById("user-phone").textContent = data.phone;
+      document.getElementById("user-balance").textContent = data.balance + " $";
     }
-  });
+  }
 }
 
-// ==========================
-// تسجيل الخروج
-// ==========================
-const logoutBtn = document.getElementById("logoutBtn");
+// ✅ تسجيل الخروج
+const logoutBtn = document.getElementById("logout");
 if (logoutBtn) {
   logoutBtn.addEventListener("click", async () => {
-    await auth.signOut();
+    await signOut(auth);
     window.location.href = "login.html";
   });
 }
 
-// ==========================
-// القائمة (٣ شخطات للجوال)
-// ==========================
-const menuToggle = document.querySelector(".menu-toggle");
-const navLinks = document.querySelector(".nav-links");
-
-if (menuToggle && navLinks) {
-  menuToggle.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
-  });
-}
+// ✅ تشغيل لوحة التحكم بعد الدخول
+window.addEventListener("load", () => {
+  if (window.location.pathname.includes("dashboard.html")) {
+    loadDashboard();
+  }
+});
