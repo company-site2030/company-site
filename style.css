@@ -147,3 +147,97 @@ body {
 @media (min-width: 901px) {
   .menu-toggle { display: none; }
 }
+
+/* ===============================
+   🔥 إضافات الداشبورد والمودالات
+   =============================== */
+.hidden {
+  display: none !important;
+}
+
+.dashboard {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 24px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+}
+
+.info-row {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.info-card {
+  flex: 1;
+  min-width: 220px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+.info-card h4 { margin-bottom: 6px; color:#00d4ff; }
+
+.tx-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 18px;
+}
+.tx-table th, .tx-table td {
+  padding: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  text-align: center;
+}
+.tx-table th { color:#00d4ff; }
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.modal-content {
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(14px);
+  border-radius: 16px;
+  padding: 24px;
+  width: 90%;
+  max-width: 420px;
+  color: #fff;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  animation: popup 0.3s ease;
+}
+@keyframes popup {
+  from { transform: scale(0.9); opacity:0; }
+  to { transform: scale(1); opacity:1; }
+}
+.modal-content h2 {
+  margin-bottom: 16px;
+  text-align: center;
+  color: #00d4ff;
+}
+.modal-content label { display:block; margin:10px 0 6px; }
+.modal-content input, .modal-content select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+}
+.close {
+  float: left;
+  font-size: 22px;
+  cursor: pointer;
+  color: #fff;
+}
+.modal-content button.btn-green {
+  width: 100%;
+  margin-top: 12px;
+}
