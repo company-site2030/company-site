@@ -70,7 +70,7 @@
   </main>
 
   <!-- مودال سحب -->
-  <div class="modal" id="withdrawModal">
+  <div class="modal hidden" id="withdrawModal">
     <div class="modal-content glass3d">
       <span class="close" id="closeWithdraw">&times;</span>
       <h2>طلب سحب</h2>
@@ -79,34 +79,40 @@
 
       <label>طريقة السحب</label>
       <select id="withdrawMethod">
+        <option value="" disabled selected>اختر</option>
         <option value="bank">حساب بنكي</option>
         <option value="crypto">منصة عملات رقمية</option>
       </select>
 
+      <!-- الحقول البنكية -->
       <div id="bankFields" class="extra-fields hidden">
         <label>اسم البنك</label>
         <input type="text" placeholder="اسم البنك">
         <label>رقم الآيبان</label>
-        <input type="text" placeholder="رقم الآيبان">
+        <input type="text" placeholder="SAxxxxxxxxxxxxxxx">
       </div>
 
-      <p class="note">
-        ⚠️ يتم السحب فقط عبر <strong>USDT</strong>  
-        على العنوان: <code>0xUSDTADDRESS123456789</code>
-      </p>
+      <!-- الحقول الخاصة بالعملات -->
+      <div id="cryptoFields" class="extra-fields hidden">
+        <label>عنوان محفظة USDT</label>
+        <input type="text" id="usdtAddress" placeholder="الصق العنوان هنا">
+        <button type="button" class="btn-green" onclick="pasteAddress()">📋 لصق العنوان</button>
+      </div>
 
+      <p class="note">⚠️ جميع عمليات السحب يتم مراجعتها من قبل الإدارة.</p>
       <button class="btn-green">تأكيد السحب</button>
     </div>
   </div>
 
   <!-- مودال إيداع -->
-  <div class="modal" id="depositModal">
+  <div class="modal hidden" id="depositModal">
     <div class="modal-content glass3d">
       <span class="close" id="closeDeposit">&times;</span>
       <h2>إيداع رصيد</h2>
       <p>قم بتحويل المبلغ عبر <strong>USDT</strong> إلى العنوان التالي:</p>
-      <code>0xUSDTADDRESS123456789</code>
-      <p>بعد التحويل، سيتم إضافة الرصيد يدوياً من قبل الإدارة.</p>
+      <code id="depositAddress">0xUSDTADDRESS123456789</code>
+      <button type="button" class="btn-green" onclick="copyAddress()">📋 نسخ العنوان</button>
+      <p>بعد التحويل، سيتم إضافة الرصيد من قبل الإدارة.</p>
     </div>
   </div>
 
@@ -116,6 +122,50 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    // فتح وإغلاق المودالات
+    const withdrawBtn = document.getElementById("withdrawBtn");
+    const depositBtn = document.getElementById("depositBtn");
+    const withdrawModal = document.getElementById("withdrawModal");
+    const depositModal = document.getElementById("depositModal");
+    const closeWithdraw = document.getElementById("closeWithdraw");
+    const closeDeposit = document.getElementById("closeDeposit");
+
+    withdrawBtn.onclick = () => withdrawModal.classList.remove("hidden");
+    depositBtn.onclick = () => depositModal.classList.remove("hidden");
+    closeWithdraw.onclick = () => withdrawModal.classList.add("hidden");
+    closeDeposit.onclick = () => depositModal.classList.add("hidden");
+
+    window.onclick = (e) => {
+      if (e.target === withdrawModal) withdrawModal.classList.add("hidden");
+      if (e.target === depositModal) depositModal.classList.add("hidden");
+    };
+
+    // إظهار الحقول حسب طريقة السحب
+    const withdrawMethod = document.getElementById("withdrawMethod");
+    const bankFields = document.getElementById("bankFields");
+    const cryptoFields = document.getElementById("cryptoFields");
+
+    withdrawMethod.onchange = () => {
+      bankFields.classList.add("hidden");
+      cryptoFields.classList.add("hidden");
+      if (withdrawMethod.value === "bank") bankFields.classList.remove("hidden");
+      if (withdrawMethod.value === "crypto") cryptoFields.classList.remove("hidden");
+    };
+
+    // زر نسخ العنوان
+    function copyAddress() {
+      const address = document.getElementById("depositAddress").textContent;
+      navigator.clipboard.writeText(address);
+      alert("تم نسخ العنوان");
+    }
+
+    // زر لصق العنوان
+    function pasteAddress() {
+      navigator.clipboard.readText().then(text => {
+        document.getElementById("usdtAddress").value = text;
+      });
+    }
+  </script>
 </body>
 </html>
