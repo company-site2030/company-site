@@ -3,12 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>لوحة الحساب</title>
+  <title>لوحة الحساب - كوين الخليج</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- الهيدر -->
   <header class="site-header">
-    <div class="brand">شركة الإعلانات</div>
+    <div class="brand">كوين الخليج</div>
     <nav>
       <ul class="nav-links" id="nav-links">
         <li><a href="index.html">الرئيسية</a></li>
@@ -18,42 +19,102 @@
     </nav>
   </header>
 
+  <!-- المحتوى -->
   <main>
-    <div class="dashboard glass">
+    <div class="dashboard">
+      <!-- معلومات العميل -->
       <div class="info-row">
-        <div class="info-card">
+        <div class="info-card glass3d">
           <h4>الاسم</h4>
           <p id="clientName">--</p>
         </div>
-        <div class="info-card">
+        <div class="info-card glass3d">
           <h4>الرصيد</h4>
-          <p id="clientBalance">0 $</p>
+          <p id="clientBalance">0 USD</p>
         </div>
       </div>
 
       <div class="info-row">
-        <div class="info-card">
+        <div class="info-card glass3d">
           <h4>الهاتف</h4>
           <p id="clientPhone">--</p>
         </div>
-        <div class="info-card">
-          <h4>البريد</h4>
+        <div class="info-card glass3d">
+          <h4>البريد الإلكتروني</h4>
           <p id="clientEmail">--</p>
         </div>
       </div>
 
+      <!-- الأزرار -->
       <div class="actions">
-        <button class="btn" id="depositBtn">إيداع</button>
-        <button class="btn ghost" id="withdrawBtn">سحب</button>
+        <button class="btn-green" id="depositBtn">إيداع</button>
+        <button class="btn" id="withdrawBtn">سحب</button>
       </div>
 
-      <h3>العمليات</h3>
-      <table class="tx-table">
-        <thead><tr><th>النوع</th><th>المبلغ</th><th>التاريخ</th><th>الحالة</th></tr></thead>
-        <tbody id="txBody"><tr><td colspan="4">لا توجد معاملات بعد</td></tr></tbody>
+      <!-- جدول العمليات -->
+      <h3>سجل العمليات</h3>
+      <table class="tx-table glass3d">
+        <thead>
+          <tr>
+            <th>النوع</th>
+            <th>المبلغ</th>
+            <th>التاريخ</th>
+            <th>الحالة</th>
+          </tr>
+        </thead>
+        <tbody id="txBody">
+          <tr><td colspan="4">لا توجد معاملات بعد</td></tr>
+        </tbody>
       </table>
     </div>
   </main>
+
+  <!-- مودال سحب -->
+  <div class="modal" id="withdrawModal">
+    <div class="modal-content glass3d">
+      <span class="close" id="closeWithdraw">&times;</span>
+      <h2>طلب سحب</h2>
+      <label>المبلغ (USD)</label>
+      <input type="number" id="withdrawAmount" placeholder="0.00">
+
+      <label>طريقة السحب</label>
+      <select id="withdrawMethod">
+        <option value="bank">حساب بنكي</option>
+        <option value="crypto">منصة عملات رقمية</option>
+      </select>
+
+      <div id="bankFields" class="extra-fields hidden">
+        <label>اسم البنك</label>
+        <input type="text" placeholder="اسم البنك">
+        <label>رقم الآيبان</label>
+        <input type="text" placeholder="رقم الآيبان">
+      </div>
+
+      <p class="note">
+        ⚠️ يتم السحب فقط عبر <strong>USDT</strong>  
+        على العنوان: <code>0xUSDTADDRESS123456789</code>
+      </p>
+
+      <button class="btn-green">تأكيد السحب</button>
+    </div>
+  </div>
+
+  <!-- مودال إيداع -->
+  <div class="modal" id="depositModal">
+    <div class="modal-content glass3d">
+      <span class="close" id="closeDeposit">&times;</span>
+      <h2>إيداع رصيد</h2>
+      <p>قم بتحويل المبلغ عبر <strong>USDT</strong> إلى العنوان التالي:</p>
+      <code>0xUSDTADDRESS123456789</code>
+      <p>بعد التحويل، سيتم إضافة الرصيد يدوياً من قبل الإدارة.</p>
+    </div>
+  </div>
+
+  <footer class="site-footer glass">
+    <div class="footer-content">
+      <div>© 2025 كوين الخليج — جميع الحقوق محفوظة</div>
+    </div>
+  </footer>
 
   <script src="script.js"></script>
 </body>
