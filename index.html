@@ -5,86 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>كوين الخليج — الصفحة الرئيسية</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    /* آيفون */
-    .iphone-container{
-      display:flex;
-      justify-content:center;
-      margin:50px 0;
-    }
-    .iphone{
-      width:280px;
-      height:520px;
-      border:14px solid #111;
-      border-radius:36px;
-      position:relative;
-      background:#000;
-      box-shadow:0 20px 60px rgba(0,0,0,0.7);
-      overflow:hidden;
-    }
-    .iphone::before{
-      content:"";
-      position:absolute;
-      top:-6px;
-      left:50%;
-      transform:translateX(-50%);
-      width:60px;
-      height:8px;
-      border-radius:6px;
-      background:#333;
-    }
-    .screen{
-      width:100%;
-      height:100%;
-      background:linear-gradient(180deg,#0b1525,#182b47);
-      color:#fff;
-      padding:20px;
-      font-family:"Cairo",sans-serif;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-    }
-    .trade-info{
-      text-align:center;
-      font-size:18px;
-      font-weight:600;
-      min-height:60px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      animation:fadeIn 1s ease;
-    }
-    @keyframes fadeIn{
-      from{opacity:0;transform:translateY(10px)}
-      to{opacity:1;transform:translateY(0)}
-    }
-    .buttons{
-      display:flex;
-      justify-content:space-around;
-      margin-bottom:30px;
-    }
-    .buttons button{
-      padding:12px 18px;
-      border:none;
-      border-radius:12px;
-      font-size:16px;
-      font-weight:700;
-      cursor:pointer;
-      box-shadow:0 4px 15px rgba(0,0,0,0.4);
-      transition:transform .2s, background .3s;
-    }
-    .btn-buy{
-      background:linear-gradient(90deg,#00ff95,#00d4ff);
-      color:#021;
-    }
-    .btn-sell{
-      background:linear-gradient(90deg,#ff5e7e,#ff884d);
-      color:#fff;
-    }
-    .buttons button:hover{
-      transform:scale(1.05);
-    }
-  </style>
 </head>
 <body>
   <header class="site-header">
@@ -96,38 +16,38 @@
         <li><a href="about.html">من نحن</a></li>
         <li><a href="services.html">الخدمات</a></li>
         <li><a href="contact.html">تواصل معنا</a></li>
-        <li><a href="login.html">دخول</a></li>
+        <li><a href="login.html" class="btn small">تسجيل الدخول</a></li>
       </ul>
-
       <button class="menu-toggle" id="menu-toggle" aria-label="القائمة">☰</button>
     </nav>
   </header>
 
   <main>
+    <!-- Hero -->
     <section id="home" class="hero glass">
       <div class="hero-left">
-        <h1>منصة آمنة لشراء وبيع العملات الرقمية في الخليج</h1>
-        <p class="lead">سهولة، أمان، ودعم محلي — افتح حسابك وابدأ التداول بعملتك المحلية.</p>
+        <h1>منصة آمنة لبيع وشراء العملات الرقمية بين الأفراد</h1>
+        <p class="lead">سهولة، أمان، ودعم محلي — خزّن عملاتك الرقمية وحوّل أرباحك مباشرةً إلى حسابك البنكي.</p>
         <div class="hero-actions">
           <a class="btn" href="register.html">إنشاء حساب</a>
           <a class="btn ghost" href="login.html">تسجيل الدخول</a>
         </div>
 
         <ul class="features">
-          <li>دعم بنكي محلي متعدد العملات</li>
-          <li>سحب وإيداع سريع وآمن</li>
+          <li>بيع وشراء العملات الرقمية بسهولة</li>
+          <li>تحويل آمن إلى حسابك البنكي</li>
           <li>دعم فني 24/7 بالعربية والإنجليزية</li>
         </ul>
       </div>
 
       <div class="hero-right">
-        <img src="https://images.unsplash.com/photo-1621761191319-c6fbf8f1cffa?w=900&q=80&auto=format&fit=crop" alt="منصة تداول رقمية">
+        <img src="https://images.unsplash.com/photo-1621761191319-c6fbf8f1cffa?w=1000&q=80&auto=format&fit=crop" alt="منصة بيع وشراء عملات رقمية">
       </div>
     </section>
 
-    <!-- قسم آيفون مع شاشة متحركة -->
+    <!-- iPhone Section -->
     <section class="section glass">
-      <h2 style="text-align:center">جرّب التداول بسهولة</h2>
+      <h2 style="text-align:center">جرّب البيع والشراء بسهولة</h2>
       <div class="iphone-container">
         <div class="iphone">
           <div class="screen">
@@ -141,9 +61,10 @@
       </div>
     </section>
 
+    <!-- لماذا كوين الخليج -->
     <section class="section glass">
       <h2>لماذا كوين الخليج؟</h2>
-      <p>نوفّر تجربة تداول مبسطة ومحمية بتقنيات أمنية معتمدة، لنمكن الأفراد والشركات من استخدام العملات الرقمية بثقة.</p>
+      <p>نوفّر منصة بيع وشراء بسيطة وآمنة مع تقنيات تخزين وتحويل معتمدة، لتمكين الأفراد والشركات من التعامل بالعملات الرقمية بثقة.</p>
 
       <div class="cards">
         <div class="card">
@@ -161,6 +82,7 @@
       </div>
     </section>
 
+    <!-- أرقام -->
     <section class="section glass">
       <h2>أرقامنا بسرعة</h2>
       <div class="cards">
@@ -170,9 +92,10 @@
       </div>
     </section>
 
+    <!-- تحميل التطبيق -->
     <section class="section glass">
       <h2>حمّل التطبيق</h2>
-      <p>تداول في أي وقت ومن أي مكان عبر تطبيقنا على الهواتف.</p>
+      <p>بيع وشراء العملات الرقمية في أي وقت ومن أي مكان عبر تطبيقنا على الهواتف.</p>
       <div class="cards">
         <div class="card">App Store</div>
         <div class="card">Google Play</div>
@@ -181,6 +104,7 @@
     </section>
   </main>
 
+  <!-- Footer -->
   <footer class="site-footer glass" style="margin:40px auto; max-width:1100px; padding:18px;">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
       <div>© 2025 كوين الخليج — جميع الحقوق محفوظة</div>
@@ -194,7 +118,7 @@
       "شراء بيتكوين بقيمة 500$",
       "بيع إيثيريوم بقيمة 200$",
       "رصيد محفظتك: 5,000$",
-      "شراء ريبل بقيمة 100$"
+      "تحويل 1000$ إلى حسابك البنكي"
     ];
     let i = 0;
     const tradeInfo = document.getElementById("trade-info");
