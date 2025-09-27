@@ -23,28 +23,32 @@
     </nav>
   </header>
 
-  <!-- القسم الرئيسي -->
+  <!-- MAIN -->
   <main>
+    <!-- Hero -->
     <section id="home" class="hero glass">
       <div class="hero-left">
-        <h1>منصة آمنة لشراء وبيع العملات الرقمية</h1>
-        <p class="lead">سهولة، أمان، ودعم محلي — افتح حسابك وابدأ البيع والشراء مباشرة.</p>
+        <h1>منصة آمنة لبيع وشراء العملات الرقمية</h1>
+        <p class="lead">سهولة، أمان، ودعم محلي — خزّن عملاتك وحوّل أرباحك مباشرةً إلى حسابك البنكي.</p>
         <div class="hero-actions">
           <a class="btn" href="register.html">إنشاء حساب</a>
           <a class="btn ghost" href="login.html">تسجيل الدخول</a>
         </div>
+
         <ul class="features">
-          <li>دعم بنكي محلي متعدد العملات</li>
-          <li>سحب وإيداع سريع وآمن</li>
-          <li>خدمة عملاء 24/7 بالعربية والإنجليزية</li>
+          <li>بيع وشراء العملات الرقمية بسهولة</li>
+          <li>تحويل آمن إلى حسابك البنكي</li>
+          <li>دعم فني 24/7 بالعربية والإنجليزية</li>
         </ul>
       </div>
+
       <div class="hero-right">
+        <!-- صورة هيرو واضحة — استبدلها بملف محلي images/hero.jpg إن رغبت -->
         <img src="https://images.unsplash.com/photo-1621761191319-c6fbf8f1cffa?w=900&q=80&auto=format&fit=crop" alt="منصة بيع وشراء العملات الرقمية">
       </div>
     </section>
 
-    <!-- قسم الآيفون -->
+    <!-- iPhone section (نص متغير + أزرار تجريبية) -->
     <section class="section glass">
       <h2 style="text-align:center">جرّب البيع والشراء بسهولة</h2>
       <div class="iphone-container">
@@ -60,10 +64,11 @@
       </div>
     </section>
 
-    <!-- المميزات -->
+    <!-- لماذا -->
     <section class="section glass">
       <h2>لماذا كوين الخليج؟</h2>
       <p>نوفّر منصة آمنة للأفراد والشركات لبيع وشراء العملات الرقمية مع إمكانية تحويل الأموال مباشرة للحساب البنكي.</p>
+
       <div class="cards">
         <div class="card">
           <h3>موثوقة</h3>
@@ -71,7 +76,7 @@
         </div>
         <div class="card">
           <h3>سريعة</h3>
-          <p>إيداع وسحب لحسابك البنكي مباشرة.</p>
+          <p>إيداع وسحب وتحويل بنكي مباشر.</p>
         </div>
         <div class="card">
           <h3>دعم فني</h3>
@@ -90,7 +95,7 @@
       </div>
     </section>
 
-    <!-- تحميل التطبيق -->
+    <!-- تطبيق -->
     <section class="section glass">
       <h2>حمّل التطبيق</h2>
       <p>بيع وشراء العملات الرقمية في أي وقت ومن أي مكان عبر تطبيقنا.</p>
@@ -102,7 +107,7 @@
     </section>
   </main>
 
-  <!-- الفوتر -->
+  <!-- Footer -->
   <footer class="site-footer glass">
     <div class="footer-content">
       <div>© 2025 كوين الخليج — جميع الحقوق محفوظة</div>
@@ -110,24 +115,27 @@
     </div>
   </footer>
 
-  <!-- سكربت للآيفون -->
+  <!-- iPhone text rotation -->
   <script>
     const tradeTexts = [
       "شراء بيتكوين بقيمة 500$",
       "بيع إيثيريوم بقيمة 200$",
       "رصيد محفظتك: 5,000$",
-      "شراء ريبل بقيمة 100$"
+      "تحويل 1000$ إلى حسابك البنكي"
     ];
     let i = 0;
     const tradeInfo = document.getElementById("trade-info");
     setInterval(()=>{
       i = (i+1) % tradeTexts.length;
-      tradeInfo.innerText = tradeTexts[i];
-      tradeInfo.style.animation="none";
-      tradeInfo.offsetHeight;
-      tradeInfo.style.animation="fadeIn 1s ease";
+      if (tradeInfo) {
+        tradeInfo.innerText = tradeTexts[i];
+        tradeInfo.style.animation="none";
+        tradeInfo.offsetHeight;
+        tradeInfo.style.animation="fadeIn 0.9s ease";
+      }
     },3000);
   </script>
+
   <script src="script.js"></script>
 </body>
 </html>
