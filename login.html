@@ -3,19 +3,28 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>تسجيل الدخول</title>
+  <title>تسجيل الدخول — كوين الخليج</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="site-header">
     <div class="brand">كوين الخليج</div>
-    <button class="menu-toggle" id="menu-toggle">☰</button>
+
+    <nav>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">الرئيسية</a></li>
+        <li><a href="about.html">من نحن</a></li>
+        <li><a href="services.html">الخدمات</a></li>
+        <li><a href="contact.html">تواصل معنا</a></li>
+        <li><a href="login.html" class="active">دخول</a></li>
+      </ul>
+      <button class="menu-toggle" id="menu-toggle">☰</button>
+    </nav>
   </header>
 
   <main>
     <div class="auth-card glass">
       <h2>تسجيل الدخول</h2>
-
       <form id="loginForm" class="auth-form">
         <label for="loginEmail">البريد الإلكتروني</label>
         <input id="loginEmail" type="email" placeholder="your@domain.com" required>
