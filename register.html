@@ -3,46 +3,56 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>إنشاء حساب — كوين الخليج</title>
+  <title>إنشاء حساب - كوين الخليج</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- الهيدر -->
   <header class="site-header">
     <div class="brand">كوين الخليج</div>
-
     <nav>
       <ul class="nav-links" id="nav-links">
         <li><a href="index.html">الرئيسية</a></li>
         <li><a href="about.html">من نحن</a></li>
         <li><a href="services.html">الخدمات</a></li>
         <li><a href="contact.html">تواصل معنا</a></li>
-        <li><a href="login.html">دخول</a></li>
+        <li><a href="login.html" class="btn-login">دخول</a></li>
+        <li><a href="register.html" class="btn-register">تسجيل</a></li>
       </ul>
-      <button class="menu-toggle" id="menu-toggle">☰</button>
+      <button class="menu-toggle" id="menu-toggle" aria-label="القائمة">☰</button>
     </nav>
   </header>
 
+  <!-- الفورم -->
   <main>
     <div class="auth-card glass">
       <h2>إنشاء حساب جديد</h2>
-      <form id="registerForm" class="auth-form">
+      <form class="auth-form" id="registerForm">
         <label for="fullName">الاسم الكامل</label>
-        <input id="fullName" type="text" placeholder="الاسم الكامل" required>
+        <input type="text" id="fullName" placeholder="اكتب اسمك الكامل" required>
 
         <label for="email">البريد الإلكتروني</label>
-        <input id="email" type="email" placeholder="your@domain.com" required>
+        <input type="email" id="email" placeholder="your@domain.com" required>
 
         <label for="phone">رقم الجوال</label>
-        <input id="phone" type="tel" placeholder="+9665xxxxxxxx" required>
+        <input type="tel" id="phone" placeholder="+9665xxxxxxxx" required>
 
         <label for="password">كلمة المرور</label>
-        <input id="password" type="password" placeholder="*****" required>
+        <input type="password" id="password" placeholder="********" required>
 
-        <button type="submit" class="btn">تسجيل</button>
+        <button type="submit" class="btn btn-register">تسجيل</button>
         <p class="small">هل لديك حساب؟ <a href="login.html">تسجيل الدخول</a></p>
       </form>
     </div>
   </main>
+
+  <!-- الفوتر -->
+  <footer class="site-footer glass">
+    <div class="footer-content">
+      <div>© 2025 كوين الخليج — جميع الحقوق محفوظة</div>
+      <div>📧 info@coingulf.com · ☎ +971 5X XXXXXXX</div>
+    </div>
+  </footer>
 
   <script src="script.js"></script>
 </body>
