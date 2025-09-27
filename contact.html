@@ -3,10 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>تواصل معنا — كوين الخليج</title>
+  <title>تواصل معنا - كوين الخليج</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- الهيدر -->
   <header class="site-header">
     <div class="brand">كوين الخليج</div>
     <nav>
@@ -14,35 +15,38 @@
         <li><a href="index.html">الرئيسية</a></li>
         <li><a href="about.html">من نحن</a></li>
         <li><a href="services.html">الخدمات</a></li>
+        <li><a href="contact.html">تواصل معنا</a></li>
+        <li><a href="login.html" class="btn-login">دخول</a></li>
+        <li><a href="register.html" class="btn-register">تسجيل</a></li>
       </ul>
       <button class="menu-toggle" id="menu-toggle" aria-label="القائمة">☰</button>
     </nav>
   </header>
 
+  <!-- الفورم -->
   <main>
-    <section class="section glass" style="margin-top:90px;">
+    <div class="auth-card glass">
       <h2>تواصل معنا</h2>
-      <p>نرحب باستفساراتك — املأ النموذج التالي أو تواصل معنا عبر القنوات المباشرة.</p>
+      <form class="auth-form">
+        <label for="name">الاسم</label>
+        <input type="text" id="name" placeholder="اكتب اسمك الكامل" required>
 
-      <form class="auth-form" style="max-width:720px;margin:18px auto;">
-        <label for="cname">الاسم</label>
-        <input id="cname" type="text" placeholder="الاسم الكامل">
+        <label for="email">البريد الإلكتروني</label>
+        <input type="email" id="email" placeholder="your@domain.com" required>
 
-        <label for="cemail">البريد الإلكتروني</label>
-        <input id="cemail" type="email" placeholder="you@example.com">
+        <label for="message">رسالتك</label>
+        <textarea id="message" placeholder="اكتب رسالتك هنا" rows="4" required></textarea>
 
-        <label for="cmsg">الرسالة</label>
-        <textarea id="cmsg" rows="5" style="padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);color:#fff"></textarea>
-
-        <button class="btn" type="button" onclick="alert('شكرًا! تم إرسال رسالتك (نموذج تجريبي).')">إرسال</button>
+        <button type="submit" class="btn">إرسال</button>
       </form>
-    </section>
+    </div>
   </main>
 
-  <footer class="site-footer glass" style="margin:40px auto; max-width:1100px; padding:18px;">
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+  <!-- الفوتر -->
+  <footer class="site-footer glass">
+    <div class="footer-content">
       <div>© 2025 كوين الخليج — جميع الحقوق محفوظة</div>
-      <div style="opacity:.85">اتصل: info@coingulf.com · +971 5X XXXXXXX</div>
+      <div>📧 info@coingulf.com · ☎ +971 5X XXXXXXX</div>
     </div>
   </footer>
 
