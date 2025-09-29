@@ -108,6 +108,23 @@
         <div class="card">QR Code</div>
       </div>
     </section>
+
+    <!-- أسعار السوق -->
+    <section class="section glass">
+      <h2>💹 أسعار السوق الآن</h2>
+      <table id="crypto-prices" class="price-table">
+        <thead>
+          <tr>
+            <th>العملة</th>
+            <th>السعر (USD)</th>
+            <th>التغيير 24h</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="3">جاري تحميل الأسعار...</td></tr>
+        </tbody>
+      </table>
+    </section>
   </main>
 
   <!-- Footer -->
@@ -136,6 +153,32 @@
         tradeInfo.style.animation="fadeIn 0.9s ease";
       }
     },3000);
+  </script>
+
+  <!-- جلب أسعار العملات -->
+  <script>
+  async function loadPrices() {
+    const url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,tether,binancecoin";
+    const res = await fetch(url);
+    const data = await res.json();
+
+    const tbody = document.querySelector("#crypto-prices tbody");
+    tbody.innerHTML = "";
+
+    data.forEach(coin => {
+      const changeClass = coin.price_change_percentage_24h >= 0 ? "price-up" : "price-down";
+      tbody.innerHTML += `
+        <tr>
+          <td><img src="${coin.image}" alt="${coin.name}" width="20"> ${coin.name}</td>
+          <td>$${coin.current_price.toLocaleString()}</td>
+          <td class="${changeClass}">${coin.price_change_percentage_24h.toFixed(2)}%</td>
+        </tr>
+      `;
+    });
+  }
+
+  loadPrices();
+  setInterval(loadPrices, 60000); // تحديث كل دقيقة
   </script>
 
   <script src="script.js"></script>
