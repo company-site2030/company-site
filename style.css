@@ -241,3 +241,32 @@ body {
   width: 100%;
   margin-top: 12px;
 }
+
+/* ===============================
+   📈 جدول أسعار السوق
+   =============================== */
+.price-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 18px;
+}
+.price-table th, .price-table td {
+  padding: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  text-align: center;
+}
+.price-table th {
+  color: #00d4ff;
+  font-size: 16px;
+}
+.price-table td {
+  font-size: 15px;
+}
+.price-up {
+  color: #22c55e; /* أخضر */
+  font-weight: 700;
+}
+.price-down {
+  color: #ef4444; /* أحمر */
+  font-weight: 700;
+}
