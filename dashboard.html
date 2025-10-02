@@ -1,130 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>لوحة الحساب - كوين الخليج</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <!-- الهيدر -->
-  <header class="site-header">
-    <div class="brand">كوين الخليج</div>
-    <nav>
-      <ul class="nav-links" id="nav-links">
-        <li><a href="index.html">الرئيسية</a></li>
-        <li><a href="#" id="logoutBtn">تسجيل الخروج</a></li>
-      </ul>
-      <button class="menu-toggle" id="menu-toggle">☰</button>
-    </nav>
-  </header>
-
-  <!-- المحتوى -->
-  <main>
-    <div class="dashboard">
-      <!-- معلومات العميل -->
-      <div class="info-row">
-        <div class="info-card glass3d">
-          <h4>الاسم</h4>
-          <p id="clientName">--</p>
-        </div>
-        <div class="info-card glass3d">
-          <h4>الرصيد</h4>
-          <p id="clientBalance">0 USD</p>
-        </div>
-      </div>
-
-      <div class="info-row">
-        <div class="info-card glass3d">
-          <h4>الهاتف</h4>
-          <p id="clientPhone">--</p>
-        </div>
-        <div class="info-card glass3d">
-          <h4>البريد الإلكتروني</h4>
-          <p id="clientEmail">--</p>
-        </div>
-      </div>
-
-      <!-- الأزرار -->
-      <div class="actions">
-        <button class="btn-green" id="depositBtn">إيداع</button>
-        <button class="btn" id="withdrawBtn">سحب</button>
-      </div>
-
-      <!-- جدول العمليات -->
-      <h3>سجل العمليات</h3>
-      <table class="tx-table glass3d">
-        <thead>
-          <tr>
-            <th>النوع</th>
-            <th>المبلغ</th>
-            <th>التاريخ</th>
-            <th>الحالة</th>
-          </tr>
-        </thead>
-        <tbody id="txBody">
-          <tr><td colspan="4">لا توجد معاملات بعد</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </main>
-
-  <!-- مودال سحب -->
-  <div class="modal hidden" id="withdrawModal">
-    <div class="modal-content glass3d">
-      <span class="close" id="closeWithdraw">&times;</span>
-      <h2>طلب سحب</h2>
-      <label>المبلغ (USD)</label>
-      <input type="number" id="withdrawAmount" placeholder="0.00">
-
-      <label>طريقة السحب</label>
-      <select id="withdrawMethod">
-        <option value="" disabled selected>اختر</option>
-        <option value="bank">حساب بنكي</option>
-        <option value="crypto">منصة عملات رقمية</option>
-      </select>
-
-      <!-- الحقول البنكية -->
-      <div id="bankFields" class="extra-fields hidden">
-        <label>اسم البنك</label>
-        <input type="text" id="bankName" placeholder="اسم البنك">
-        <label>رقم الآيبان</label>
-        <input type="text" id="iban" placeholder="SAxxxxxxxxxxxxxxx">
-      </div>
-
-      <!-- الحقول الخاصة بالعملات -->
-      <div id="cryptoFields" class="extra-fields hidden">
-        <label>عنوان محفظة USDT</label>
-        <input type="text" id="usdtAddress" placeholder="الصق العنوان هنا">
-        <button type="button" class="btn-green" onclick="pasteAddress()">📋 لصق العنوان</button>
-      </div>
-
-      <p class="note">⚠️ جميع عمليات السحب يتم مراجعتها من قبل الإدارة.</p>
-      <button class="btn-green" id="confirmWithdraw">تأكيد السحب</button>
-    </div>
-  </div>
-
-  <!-- مودال إيداع -->
-  <div class="modal hidden" id="depositModal">
-    <div class="modal-content glass3d">
-      <span class="close" id="closeDeposit">&times;</span>
-      <h2>إيداع رصيد</h2>
-      <p>قم بتحويل المبلغ عبر <strong>USDT</strong> إلى العنوان التالي:</p>
-      <code id="depositAddress">0x7F8125C197B845E1F0682A9846B94A11cA9d9743</code>
-      <button type="button" class="btn-green" onclick="copyAddress()">📋 نسخ العنوان</button>
-      <label>المبلغ (USD)</label>
-      <input type="number" id="depositAmount" placeholder="0.00">
-      <button class="btn-green" id="confirmDeposit">تأكيد الإيداع</button>
-      <p>بعد التحويل، سيتم إضافة الرصيد من قبل الإدارة.</p>
-    </div>
-  </div>
-
-  <footer class="site-footer glass">
-    <div class="footer-content">
-      <div>© 2025 كوين الخليج — جميع الحقوق محفوظة</div>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
-</body>
-</html>
