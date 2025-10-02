@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>تواصل معنا - كوين الخليج</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- الهيدر (مطابق للرئيسية) -->
+  <header class="site-header">
+    <div class="brand">كوين الخليج</div>
+    <nav>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html#home">الرئيسية</a></li>
+        <li><a href="about.html">من نحن</a></li>
+        <li><a href="services.html">الخدمات</a></li>
+        <li><a href="contact.html" class="active">تواصل معنا</a></li>
+        <li><a href="login.html" class="btn btn-green">دخول</a></li>
+        <li><a href="register.html" class="btn btn-register">تسجيل</a></li>
+      </ul>
+      <button class="menu-toggle" id="menu-toggle" aria-label="القائمة">☰</button>
+    </nav>
+  </header>
+
+  <!-- المحتوى -->
+  <main>
+    <section class="section" style="margin-top:36px;">
+      <div class="auth-card glass" style="max-width:760px;margin:20px auto;padding:28px;">
+        <h2 style="text-align:center;margin-bottom:18px;">تواصل معنا</h2>
+
+        <form class="auth-form" id="contactForm" style="max-width:680px;margin:0 auto;">
+          <label for="cname">الاسم</label>
+          <input id="cname" type="text" placeholder="الاسم الكامل" required>
+
+          <label for="cemail">البريد الإلكتروني</label>
+          <input id="cemail" type="email" placeholder="you@domain.com" required>
+
+          <label for="cmsg">الرسالة</label>
+          <textarea id="cmsg" rows="6" placeholder="اكتب رسالتك هنا..." required style="padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);color:#fff"></textarea>
+
+          <div style="text-align:center;margin-top:14px;">
+            <button type="submit" class="btn">إرسال</button>
+          </div>
+        </form>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer glass">
+    <div class="footer-content">
+      <div>© 2025 كوين الخليج — جميع الحقوق محفوظة</div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
