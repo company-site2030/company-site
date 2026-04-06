@@ -1,216 +1,18 @@
-/* script.js (معدل)
-   - menu toggle
-   - Firebase init
-   - register/login/dashboard logic
-   - deposit/withdraw + transactions مع المودالات
-*/
+// script.js (Supabase version)
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
+const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+const SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY';
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// Menu toggle
 document.addEventListener('DOMContentLoaded', () => {
   const menuBtn = document.getElementById('menu-toggle');
   const nav = document.getElementById('nav-links') || document.querySelector('.nav-links');
   if (menuBtn && nav) {
-    menuBtn.addEventListener('click', () => {
-      nav.classList.toggle('active');
-    });
+    menuBtn.addEventListener('click', () => nav.classList.toggle('active'));
   }
 });
-
-// Firebase init
-(function(){
-  const firebaseConfig = {
-    apiKey: "AIzaSyCFYr3mTYs3BFvtnIcuFEjkSfJV3kPrzXk",
-    authDomain: "ads-company-2e012.firebaseapp.com",
-    projectId: "ads-company-2e012",
-    storageBucket: "ads-company-2e012.appspot.com",
-    messagingSenderId: "706203585878",
-    appId: "1:706203585878:web:98c58764c1c7f95f1e5af7",
-    measurementId: "G-BKSKHM3Z2S"
-  };
-
-  function loadScript(src){ 
-    return new Promise(res => { 
-      const s=document.createElement('script'); 
-      s.src=src; 
-      s.onload=res; 
-      document.head.appendChild(s); 
-    }); 
-  }
-
-  async function initFirebaseAndApp(){
-    await loadScript('https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js');
-    await loadScript('https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js');
-    await loadScript('https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js');
-
-    if (!window.firebase.apps || !window.firebase.apps.length){
-      firebase.initializeApp(firebaseConfig);
-    }
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-
-    // Registration
-    const registerForm = document.getElementById('registerForm');
-    if (registerForm){
-      registerForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const fullName = document.getElementById('fullName')?.value || "";
-        const email = document.getElementById('email').value.trim();
-        const phone = document.getElementById('phone')?.value.trim() || "";
-        const password = document.getElementById('password').value;
-
-        try {
-          const userCred = await auth.createUserWithEmailAndPassword(email, password);
-          const user = userCred.user;
-          await user.updateProfile({ displayName: fullName });
-
-          await db.collection('users').doc(user.uid).set({
-            name: fullName,
-            email,
-            phone,
-            balance: 0,
-            transactions: []
-          });
-
-          window.location.href = 'dashboard.html';
-        } catch(err){
-          alert('خطأ أثناء التسجيل: ' + err.message);
-        }
-      });
-    }
-
-    // Login
-    const loginForm = document.getElementById('loginForm');
-    if (loginForm){
-      loginForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = document.getElementById('loginEmail').value.trim();
-        const password = document.getElementById('loginPassword').value;
-        try {
-          await auth.signInWithEmailAndPassword(email, password);
-          window.location.href = 'dashboard.html';
-        } catch(err){
-          alert('خطأ أثناء تسجيل الدخول: ' + err.message);
-        }
-      });
-    }
-
-    // Dashboard
-    if (window.location.pathname.includes('dashboard.html')){
-      auth.onAuthStateChanged(async (user) => {
-        if (!user) { window.location.href = 'login.html'; return; }
-        const docRef = db.collection('users').doc(user.uid);
-        let data;
-        try {
-          const snap = await docRef.get();
-          if (!snap.exists){
-            await docRef.set({ 
-              name: user.displayName || '', 
-              email: user.email || '', 
-              phone: user.phoneNumber || '', 
-              balance: 0, 
-              transactions: [] 
-            });
-          }
-          data = (await docRef.get()).data();
-
-          // Fill user info
-          document.getElementById('clientName').textContent = data.name || 'مستخدم';
-          document.getElementById('clientEmail').textContent = data.email || '';
-          document.getElementById('clientPhone').textContent = data.phone || '';
-          document.getElementById('clientBalance').textContent = (Number(data.balance)||0) + ' $';
-
-          // Transactions
-          const txBody = document.getElementById('txBody');
-          if (data.transactions && data.transactions.length){
-            txBody.innerHTML = '';
-            data.transactions.slice().reverse().forEach(tx => {
-              const tr = document.createElement('tr');
-              tr.innerHTML = `<td>${tx.type}</td><td>${tx.amount} $</td><td>${tx.date}</td><td>${tx.status||'—'}</td>`;
-              txBody.appendChild(tr);
-            });
-          }
-
-          // Deposit
-          const depositBtn = document.getElementById('depositBtn');
-          const depositModal = document.getElementById('depositModal');
-          const closeDeposit = document.getElementById('closeDeposit');
-          const confirmDeposit = document.getElementById('confirmDeposit');
-          depositBtn.onclick = () => depositModal.classList.remove("hidden");
-          closeDeposit.onclick = () => depositModal.classList.add("hidden");
-          confirmDeposit.onclick = async () => {
-            const amount = parseFloat(document.getElementById('depositAmount').value);
-            if (!amount || amount <= 0) { alert('أدخل مبلغ صحيح'); return; }
-            await docRef.update({ 
-              transactions: firebase.firestore.FieldValue.arrayUnion({ 
-                type:'إيداع', 
-                amount, 
-                date: new Date().toLocaleString(), 
-                status: 'قيد الانتظار' 
-              })
-            });
-            alert('✅ تم إرسال إشعار الإيداع (قيد الانتظار).');
-            location.reload();
-          };
-
-          // Withdraw
-          const withdrawBtn = document.getElementById('withdrawBtn');
-          const withdrawModal = document.getElementById('withdrawModal');
-          const closeWithdraw = document.getElementById('closeWithdraw');
-          const confirmWithdraw = document.getElementById('confirmWithdraw');
-          withdrawBtn.onclick = () => withdrawModal.classList.remove("hidden");
-          closeWithdraw.onclick = () => withdrawModal.classList.add("hidden");
-
-          confirmWithdraw.onclick = async () => {
-            const amount = parseFloat(document.getElementById('withdrawAmount').value);
-            const method = document.getElementById('withdrawMethod').value;
-            if (!amount || amount <= 0) { alert('أدخل مبلغ صحيح'); return; }
-            if (amount > (Number(data.balance)||0)) { alert('الرصيد غير كافٍ'); return; }
-
-            let details = {};
-            if (method === 'bank'){
-              details = {
-                bankName: document.getElementById('bankName').value,
-                iban: document.getElementById('iban').value
-              };
-            } else if (method === 'crypto'){
-              details = { usdtAddress: document.getElementById('usdtAddress').value };
-            } else {
-              alert('اختر طريقة السحب'); return;
-            }
-
-            await docRef.update({
-              balance: (Number(data.balance) || 0) - amount,
-              transactions: firebase.firestore.FieldValue.arrayUnion({ 
-                type:'سحب', 
-                amount, 
-                date: new Date().toLocaleString(), 
-                status: 'قيد الانتظار',
-                method,
-                ...details
-              })
-            });
-            alert('✅ تم تسجيل طلب السحب (قيد الانتظار).');
-            location.reload();
-          };
-
-          // Logout
-          document.getElementById('logoutBtn')?.addEventListener('click', async (e) => {
-            e.preventDefault();
-            await auth.signOut();
-            window.location.href = 'login.html';
-          });
-
-        } catch(err){
-          console.error(err);
-          alert('خطأ أثناء تحميل البيانات: ' + err.message);
-        }
-      });
-    }
-
-    window._fb = { auth, db };
-  }
-
-  initFirebaseAndApp();
-})();
 
 // Helpers
 function copyAddress() {
@@ -221,5 +23,190 @@ function copyAddress() {
 function pasteAddress() {
   navigator.clipboard.readText().then(text => {
     document.getElementById("usdtAddress").value = text;
+  });
+}
+
+// ---------- REGISTER ----------
+const registerForm = document.getElementById('registerForm');
+if (registerForm) {
+  registerForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fullName = document.getElementById('fullName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const password = document.getElementById('password').value;
+
+    try {
+      // Sign up with Supabase Auth
+      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { data: { full_name: fullName, phone } }
+      });
+      if (signUpError) throw signUpError;
+
+      // Insert into clients table
+      const { error: clientError } = await supabase
+        .from('clients')
+        .insert([{ id: signUpData.user.id, name: fullName, email, phone, balance: 0 }]);
+      if (clientError) throw clientError;
+
+      alert('تم إنشاء الحساب بنجاح ✅');
+      window.location.href = 'login.html';
+    } catch(err) {
+      alert('خطأ أثناء التسجيل: ' + err.message);
+    }
+  });
+}
+
+// ---------- LOGIN ----------
+const loginForm = document.getElementById('loginForm');
+if (loginForm) {
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      window.location.href = 'dashboard.html';
+    } catch(err) {
+      alert('خطأ أثناء تسجيل الدخول: ' + err.message);
+    }
+  });
+}
+
+// ---------- DASHBOARD ----------
+if (window.location.pathname.includes('dashboard.html')) {
+  supabase.auth.getSession().then(async ({ data: { session } }) => {
+    if (!session) { window.location.href = 'login.html'; return; }
+
+    const clientId = session.user.id;
+
+    async function loadClientData() {
+      try {
+        // جلب بيانات العميل
+        const { data: client, error: clientError } = await supabase
+          .from('clients')
+          .select('*')
+          .eq('id', clientId)
+          .single();
+        if (clientError) throw clientError;
+
+        document.getElementById('clientName').textContent = client.name;
+        document.getElementById('clientEmail').textContent = client.email;
+        document.getElementById('clientPhone').textContent = client.phone;
+        document.getElementById('clientBalance').textContent = (Number(client.balance)||0) + ' USD';
+
+        // جلب المعاملات
+        const { data: txs, error: txError } = await supabase
+          .from('transactions')
+          .select('*')
+          .eq('client_id', clientId)
+          .order('created_at', { ascending: false });
+        if (txError) throw txError;
+
+        const txBody = document.getElementById('txBody');
+        if (!txs.length) {
+          txBody.innerHTML = '<tr><td colspan="4">لا توجد معاملات بعد</td></tr>';
+        } else {
+          txBody.innerHTML = txs.map(tx => `
+            <tr>
+              <td>${tx.type}</td>
+              <td>${tx.amount} ${tx.currency}</td>
+              <td>${new Date(tx.created_at).toLocaleString()}</td>
+              <td>قيد الانتظار</td>
+            </tr>
+          `).join('');
+        }
+
+      } catch(err) {
+        console.error(err);
+        alert('خطأ أثناء تحميل البيانات: ' + err.message);
+      }
+    }
+
+    await loadClientData();
+
+    // Logout
+    document.getElementById('logoutBtn')?.addEventListener('click', async (e) => {
+      e.preventDefault();
+      await supabase.auth.signOut();
+      window.location.href = 'login.html';
+    });
+
+    // Deposit
+    const depositBtn = document.getElementById('depositBtn');
+    const depositModal = document.getElementById('depositModal');
+    const closeDeposit = document.getElementById('closeDeposit');
+    const confirmDeposit = document.getElementById('confirmDeposit');
+
+    depositBtn.onclick = () => depositModal.classList.remove("hidden");
+    closeDeposit.onclick = () => depositModal.classList.add("hidden");
+    confirmDeposit.onclick = async () => {
+      const amount = parseFloat(document.getElementById('depositAmount').value);
+      if (!amount || amount <= 0) { alert('أدخل مبلغ صحيح'); return; }
+
+      await supabase.from('transactions').insert([{
+        client_id: clientId,
+        type: 'deposit',
+        amount,
+        currency: 'USDT'
+      }]);
+
+      alert('✅ تم تسجيل طلب الإيداع (قيد الانتظار).');
+      depositModal.classList.add("hidden");
+      loadClientData();
+    };
+
+    // Withdraw
+    const withdrawBtn = document.getElementById('withdrawBtn');
+    const withdrawModal = document.getElementById('withdrawModal');
+    const closeWithdraw = document.getElementById('closeWithdraw');
+    const confirmWithdraw = document.getElementById('confirmWithdraw');
+
+    withdrawBtn.onclick = () => withdrawModal.classList.remove("hidden");
+    closeWithdraw.onclick = () => withdrawModal.classList.add("hidden");
+    confirmWithdraw.onclick = async () => {
+      const amount = parseFloat(document.getElementById('withdrawAmount').value);
+      const method = document.getElementById('withdrawMethod').value;
+      if (!amount || amount <= 0) { alert('أدخل مبلغ صحيح'); return; }
+
+      // جلب الرصيد الحالي
+      const { data: client, error: clientError } = await supabase
+        .from('clients')
+        .select('*')
+        .eq('id', clientId)
+        .single();
+      if (clientError) { alert(clientError.message); return; }
+      if (amount > (Number(client.balance) || 0)) { alert('الرصيد غير كافٍ'); return; }
+
+      let details = {};
+      if (method === 'bank') {
+        details = {
+          bankName: document.getElementById('bankName').value,
+          iban: document.getElementById('iban').value
+        };
+      } else if (method === 'crypto') {
+        details = { usdtAddress: document.getElementById('usdtAddress').value };
+      } else { alert('اختر طريقة السحب'); return; }
+
+      // إضافة معاملة السحب
+      await supabase.from('transactions').insert([{
+        client_id: clientId,
+        type: 'withdraw',
+        amount,
+        currency: 'USDT',
+        ...details
+      }]);
+
+      // تحديث الرصيد
+      await supabase.from('clients').update({ balance: client.balance - amount }).eq('id', clientId);
+
+      alert('✅ تم تسجيل طلب السحب (قيد الانتظار).');
+      withdrawModal.classList.add("hidden");
+      loadClientData();
+    };
   });
 }
