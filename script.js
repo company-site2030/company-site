@@ -1,4 +1,4 @@
-// script.js (Supabase version)
+// script.js - Supabase version
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
 const SUPABASE_URL = 'YOUR_SUPABASE_URL';
@@ -37,7 +37,6 @@ if (registerForm) {
     const password = document.getElementById('password').value;
 
     try {
-      // Sign up with Supabase Auth
       const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
@@ -45,11 +44,13 @@ if (registerForm) {
       });
       if (signUpError) throw signUpError;
 
-      // Insert into clients table
-      const { error: clientError } = await supabase
-        .from('clients')
-        .insert([{ id: signUpData.user.id, name: fullName, email, phone, balance: 0 }]);
-      if (clientError) throw clientError;
+      await supabase.from('clients').insert([{ 
+        id: signUpData.user.id, 
+        name: fullName, 
+        email, 
+        phone, 
+        balance: 0 
+      }]);
 
       alert('تم إنشاء الحساب بنجاح ✅');
       window.location.href = 'login.html';
@@ -81,50 +82,26 @@ if (loginForm) {
 if (window.location.pathname.includes('dashboard.html')) {
   supabase.auth.getSession().then(async ({ data: { session } }) => {
     if (!session) { window.location.href = 'login.html'; return; }
-
     const clientId = session.user.id;
 
     async function loadClientData() {
-      try {
-        // جلب بيانات العميل
-        const { data: client, error: clientError } = await supabase
-          .from('clients')
-          .select('*')
-          .eq('id', clientId)
-          .single();
-        if (clientError) throw clientError;
+      const { data: client } = await supabase.from('clients').select('*').eq('id', clientId).single();
+      document.getElementById('clientName').textContent = client.name;
+      document.getElementById('clientEmail').textContent = client.email;
+      document.getElementById('clientPhone').textContent = client.phone;
+      document.getElementById('clientBalance').textContent = (Number(client.balance)||0) + ' USD';
 
-        document.getElementById('clientName').textContent = client.name;
-        document.getElementById('clientEmail').textContent = client.email;
-        document.getElementById('clientPhone').textContent = client.phone;
-        document.getElementById('clientBalance').textContent = (Number(client.balance)||0) + ' USD';
-
-        // جلب المعاملات
-        const { data: txs, error: txError } = await supabase
-          .from('transactions')
-          .select('*')
-          .eq('client_id', clientId)
-          .order('created_at', { ascending: false });
-        if (txError) throw txError;
-
-        const txBody = document.getElementById('txBody');
-        if (!txs.length) {
-          txBody.innerHTML = '<tr><td colspan="4">لا توجد معاملات بعد</td></tr>';
-        } else {
-          txBody.innerHTML = txs.map(tx => `
-            <tr>
-              <td>${tx.type}</td>
-              <td>${tx.amount} ${tx.currency}</td>
-              <td>${new Date(tx.created_at).toLocaleString()}</td>
-              <td>قيد الانتظار</td>
-            </tr>
-          `).join('');
-        }
-
-      } catch(err) {
-        console.error(err);
-        alert('خطأ أثناء تحميل البيانات: ' + err.message);
-      }
+      const { data: txs } = await supabase.from('transactions')
+        .select('*').eq('client_id', clientId).order('created_at', { ascending: false });
+      const txBody = document.getElementById('txBody');
+      txBody.innerHTML = txs.length ? txs.map(tx => `
+        <tr>
+          <td>${tx.type}</td>
+          <td>${tx.amount} ${tx.currency}</td>
+          <td>${new Date(tx.created_at).toLocaleString()}</td>
+          <td>قيد الانتظار</td>
+        </tr>
+      `).join('') : '<tr><td colspan="4">لا توجد معاملات بعد</td></tr>';
     }
 
     await loadClientData();
@@ -141,20 +118,17 @@ if (window.location.pathname.includes('dashboard.html')) {
     const depositModal = document.getElementById('depositModal');
     const closeDeposit = document.getElementById('closeDeposit');
     const confirmDeposit = document.getElementById('confirmDeposit');
-
     depositBtn.onclick = () => depositModal.classList.remove("hidden");
     closeDeposit.onclick = () => depositModal.classList.add("hidden");
     confirmDeposit.onclick = async () => {
       const amount = parseFloat(document.getElementById('depositAmount').value);
       if (!amount || amount <= 0) { alert('أدخل مبلغ صحيح'); return; }
-
       await supabase.from('transactions').insert([{
         client_id: clientId,
         type: 'deposit',
         amount,
         currency: 'USDT'
       }]);
-
       alert('✅ تم تسجيل طلب الإيداع (قيد الانتظار).');
       depositModal.classList.add("hidden");
       loadClientData();
@@ -165,7 +139,6 @@ if (window.location.pathname.includes('dashboard.html')) {
     const withdrawModal = document.getElementById('withdrawModal');
     const closeWithdraw = document.getElementById('closeWithdraw');
     const confirmWithdraw = document.getElementById('confirmWithdraw');
-
     withdrawBtn.onclick = () => withdrawModal.classList.remove("hidden");
     closeWithdraw.onclick = () => withdrawModal.classList.add("hidden");
     confirmWithdraw.onclick = async () => {
@@ -173,13 +146,7 @@ if (window.location.pathname.includes('dashboard.html')) {
       const method = document.getElementById('withdrawMethod').value;
       if (!amount || amount <= 0) { alert('أدخل مبلغ صحيح'); return; }
 
-      // جلب الرصيد الحالي
-      const { data: client, error: clientError } = await supabase
-        .from('clients')
-        .select('*')
-        .eq('id', clientId)
-        .single();
-      if (clientError) { alert(clientError.message); return; }
+      const { data: client } = await supabase.from('clients').select('*').eq('id', clientId).single();
       if (amount > (Number(client.balance) || 0)) { alert('الرصيد غير كافٍ'); return; }
 
       let details = {};
@@ -192,7 +159,6 @@ if (window.location.pathname.includes('dashboard.html')) {
         details = { usdtAddress: document.getElementById('usdtAddress').value };
       } else { alert('اختر طريقة السحب'); return; }
 
-      // إضافة معاملة السحب
       await supabase.from('transactions').insert([{
         client_id: clientId,
         type: 'withdraw',
@@ -200,8 +166,6 @@ if (window.location.pathname.includes('dashboard.html')) {
         currency: 'USDT',
         ...details
       }]);
-
-      // تحديث الرصيد
       await supabase.from('clients').update({ balance: client.balance - amount }).eq('id', clientId);
 
       alert('✅ تم تسجيل طلب السحب (قيد الانتظار).');
